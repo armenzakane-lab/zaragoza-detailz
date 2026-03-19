@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Your Detail — Zaragoza Detailz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --black2: #111111;
+      --black3: #1a1a1a;
+      --gold: #f59e0b;
+      --gold-dim: rgba(245, 158, 11, 0.15);
+      --gold-border: rgba(245, 158, 11, 0.6);
+      --white: #ffffff;
+      --gray: #888888;
+      --gray2: #555555;
+      --nav-h: 64px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      padding-top: var(--nav-h);
+      min-height: 100vh;
+    }
+
+    /* ─── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(10, 10, 10, 0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 28px;
+      z-index: 1000;
+    }
+
+    .nav-back {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+      justify-self: start;
+    }
+    .nav-back:hover { color: var(--white); }
+
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      color: var(--white);
+      user-select: none;
+      text-align: center;
+    }
+    .nav-logo .z-gold { color: var(--gold); }
+
+    .nav-phone {
+      justify-self: end;
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      transition: opacity 0.2s;
+    }
+    .nav-phone:hover { opacity: 0.8; }
+
+    @media (max-width: 520px) {
+      nav { padding: 0 16px; }
+      .nav-phone { font-size: 0.78rem; }
+      .nav-logo { font-size: 0.95rem; }
+    }
+
+    /* ─── PAGE WRAPPER ─────────────────────────────── */
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ─── STEP INDICATOR ───────────────────────────── */
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 48px;
+    }
+
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+    }
+
+    .step-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--black3);
+      border: 2px solid rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--gray);
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-item.active .step-dot {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #000;
+    }
+
+    .step-item.done .step-dot {
+      background: rgba(245,158,11,0.2);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .step-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray2);
+      transition: color 0.3s;
+      white-space: nowrap;
+    }
+
+    .step-item.active .step-label,
+    .step-item.done .step-label { color: var(--gold); }
+
+    .step-line {
+      width: 80px;
+      height: 2px;
+      background: rgba(255,255,255,0.08);
+      margin-bottom: 24px;
+      transition: background 0.3s;
+    }
+
+    .step-line.done { background: rgba(245,158,11,0.4); }
+
+    @media (max-width: 480px) {
+      .step-line { width: 40px; }
+      .step-label { font-size: 0.62rem; }
+    }
+
+    /* ─── SUCCESS STATE ────────────────────────────── */
+    #successState {
+      display: none;
+      text-align: center;
+      padding: 80px 24px;
+    }
+    #successState.show { display: block; }
+
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      background: var(--gold-dim);
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      font-size: 2rem;
+    }
+    .success-title {
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .success-sub {
+      color: var(--gray);
+      font-size: 1rem;
+      max-width: 380px;
+      margin: 0 auto 32px;
+    }
+    .success-back {
+      display: inline-block;
+      background: var(--gold);
+      color: #000;
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 14px 32px;
+      border-radius: 10px;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── BOOKING FORM ─────────────────────────────── */
+    #bookingFlow { display: block; }
+
+    /* ─── STEP SECTION ─────────────────────────────── */
+    .step-section {
+      margin-bottom: 40px;
+    }
+
+    .step-heading {
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+    .step-sub {
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+
+    /* ─── PACKAGE CARDS ────────────────────────────── */
+    .pkg-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 560px) {
+      .pkg-cards { grid-template-columns: 1fr; }
+    }
+
+    .pkg-card {
+      background: var(--black2);
+      border: 2px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 28px 24px;
+      cursor: pointer;
+      transition: border-color 0.25s, background 0.25s, transform 0.2s;
+      position: relative;
+      user-select: none;
+    }
+    .pkg-card:hover {
+      border-color: rgba(245,158,11,0.4);
+      transform: translateY(-2px);
+    }
+    .pkg-card.selected {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, #141200 0%, #111 100%);
+    }
+    .pkg-card.selected::after {
+      content: '✓';
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      width: 24px;
+      height: 24px;
+      background: var(--gold);
+      color: #000;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 24px;
+      text-align: center;
+    }
+
+    .pkg-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: #000;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .pkg-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .pkg-price {
+      font-size: 0.85rem;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    .pkg-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .pkg-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: #ccc;
+    }
+    .pkg-list li::before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      min-width: 5px;
+      background: var(--gold);
+      border-radius: 50%;
+      margin-top: 7px;
+    }
+
+    /* ─── HIDDEN STEPS ─────────────────────────────── */
+    .step-hidden {
+      display: none;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .step-hidden.revealed {
+      display: block;
+    }
+    .step-hidden.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── ADD-ON CARDS ─────────────────────────────── */
+    .addons-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 560px) {
+      .addons-grid { grid-template-columns: 1fr; }
+    }
+
+    .addon-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 14px 16px;
+      border: 1.5px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      transition: border-color 0.2s, background 0.2s;
+      font-size: 0.88rem;
+      color: #ccc;
+      user-select: none;
+    }
+    .addon-card:hover {
+      border-color: rgba(245,158,11,0.4);
+      background: rgba(245,158,11,0.04);
+    }
+    .addon-card.checked {
+      border-color: var(--gold);
+      background: rgba(245,158,11,0.08);
+      color: var(--white);
+    }
+
+    .addon-card input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      min-width: 17px;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    .addon-price {
+      margin-left: auto;
+      color: var(--gold);
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .btn-continue {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 12px 28px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      margin-top: 4px;
+    }
+    .btn-continue:hover {
+      background: var(--gold);
+      color: #000;
+    }
+
+    /* ─── FORM FIELDS ──────────────────────────────── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-grid.single { grid-template-columns: 1fr; }
+
+    @media (max-width: 560px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .form-group label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #999;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--black3);
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      padding: 13px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--gray2); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+
+    /* Hidden service input */
+    #selectedServiceInput { display: none; }
+
+    /* Subscription check */
+    .sub-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #ccc;
+      padding: 14px 16px;
+      border: 1.5px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 20px;
+    }
+    .sub-label:hover { border-color: rgba(245,158,11,0.35); }
+    .sub-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    .form-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      margin: 28px 0;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--gold);
+      color: #000;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      padding: 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+      margin-top: 8px;
+    }
+    .btn-submit:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(245,158,11,0.35);
+    }
+
+    .form-note {
+      font-size: 0.78rem;
+      color: var(--gray2);
+      text-align: center;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ─────────────────────────────────────── -->
+  <nav>
+    <a href="./index.html" class="nav-back">← Back</a>
+    <a href="./index.html" class="nav-logo"><span class="z-gold">Z</span>aragoza Detailz</a>
+    <a href="tel:9514072439" class="nav-phone">(951) 407-2439</a>
+  </nav>
+
+  <div class="page">
+
+    <!-- ─── SUCCESS ───────────────────────────────── -->
+    <div id="successState">
+      <div class="success-icon">✓</div>
+      <div class="success-title">You're Booked!</div>
+      <p class="success-sub">We'll confirm your appointment within 24 hours. Check your email for details.</p>
+      <a href="./index.html" class="success-back">← Back to Home</a>
+    </div>
+
+    <!-- ─── BOOKING FLOW ──────────────────────────── -->
+    <div id="bookingFlow">
+
+      <!-- Step Indicator -->
+      <div class="step-indicator">
+        <div class="step-item active" id="stepDot1">
+          <div class="step-dot">1</div>
+          <div class="step-label">Service</div>
+        </div>
+        <div class="step-line" id="stepLine1"></div>
+        <div class="step-item" id="stepDot2">
+          <div class="step-dot">2</div>
+          <div class="step-label">Add-Ons</div>
+        </div>
+        <div class="step-line" id="stepLine2"></div>
+        <div class="step-item" id="stepDot3">
+          <div class="step-dot">3</div>
+          <div class="step-label">Details</div>
+        </div>
+      </div>
+
+      <form id="bookingForm" action="https://formsubmit.co/ZaragozaDetailz@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New Booking - Zaragoza Detailz" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_next" value="https://armenzakane-lab.github.io/zaragoza-detailz/book.html?booked=1" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="service" id="selectedServiceInput" />
+
+        <!-- ─── STEP 1: Service ─────────────────────── -->
+        <div class="step-section" id="step1">
+          <div class="step-heading">Choose your service</div>
+          <div class="step-sub">Tap a package to get started.</div>
+
+          <div class="pkg-cards">
+            <div class="pkg-card" data-service="Standard Detail" id="pkgStandard" onclick="selectPackage('Standard Detail')">
+              <div class="pkg-name">Standard Detail</div>
+              <div class="pkg-price">$120 Sedan &nbsp;·&nbsp; $140 SUV / Truck</div>
+              <ul class="pkg-list">
+                <li>Exterior hand wash &amp; dry</li>
+                <li>Interior vacuum &amp; wipe-down</li>
+                <li>Window cleaning (in &amp; out)</li>
+                <li>Tire &amp; wheel cleaning</li>
+                <li>Dashboard &amp; console detail</li>
+                <li>Door jamb wipe</li>
+              </ul>
+            </div>
+
+            <div class="pkg-card" data-service="Premium Detail" id="pkgPremium" onclick="selectPackage('Premium Detail')">
+              <div class="pkg-badge">Most Popular</div>
+              <div class="pkg-name">Premium Detail</div>
+              <div class="pkg-price">$220 Sedan &nbsp;·&nbsp; $260 SUV / Truck</div>
+              <ul class="pkg-list">
+                <li>Everything in Standard</li>
+                <li>Machine polish &amp; paint decontamination</li>
+                <li>Deep interior shampoo &amp; extraction</li>
+                <li>Leather conditioning</li>
+                <li>Tire dressing &amp; trim restoration</li>
+                <li>Ceramic quick coat finish</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── STEP 2: Add-Ons ─────────────────────── -->
+        <div class="step-section step-hidden" id="step2">
+          <div class="step-heading">Select Add-Ons</div>
+          <div class="step-sub">Optional upgrades. Pick as many as you want.</div>
+
+          <div class="addons-grid">
+            <label class="addon-card">
+              <input type="checkbox" name="addon_pet_hair" value="Pet Hair Removal (+$25)" onchange="onAddonChange(this)" />
+              Pet hair removal
+              <span class="addon-price">+$25</span>
+            </label>
+            <label class="addon-card">
+              <input type="checkbox" name="addon_engine_bay" value="Engine Bay Cleaning (+$50)" onchange="onAddonChange(this)" />
+              Engine bay cleaning
+              <span class="addon-price">+$50</span>
+            </label>
+            <label class="addon-card">
+              <input type="checkbox" name="addon_seat_extraction" value="Seat Extraction (+$50)" onchange="onAddonChange(this)" />
+              Seat extraction
+              <span class="addon-price">+$50</span>
+            </label>
+            <label class="addon-card">
+              <input type="checkbox" name="addon_clay_bar" value="Clay Bar Treatment (+$35)" onchange="onAddonChange(this)" />
+              Clay bar treatment
+              <span class="addon-price">+$35</span>
+            </label>
+            <label class="addon-card">
+              <input type="checkbox" name="addon_ceramic" value="Ceramic Sealant 1-3mo (+$25)" onchange="onAddonChange(this)" />
+              Ceramic sealant 1–3mo
+              <span class="addon-price">+$25</span>
+            </label>
+            <label class="addon-card">
+              <input type="checkbox" name="addon_trim" value="Trim Restoration (+$25)" onchange="onAddonChange(this)" />
+              Trim restoration
+              <span class="addon-price">+$25</span>
+            </label>
+            <label class="addon-card">
+              <input type="checkbox" name="addon_carpet" value="Carpet Extraction (+$85)" onchange="onAddonChange(this)" />
+              Carpet extraction
+              <span class="addon-price">+$85</span>
+            </label>
+          </div>
+
+          <button type="button" class="btn-continue" onclick="revealStep3()">
+            Continue → Enter Your Details
+          </button>
+        </div>
+
+        <!-- ─── STEP 3: Details ─────────────────────── -->
+        <div class="step-section step-hidden" id="step3">
+          <div class="step-heading">Your details</div>
+          <div class="step-sub">We'll reach out within 24 hours to confirm.</div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Full Name *</label>
+              <input type="text" id="name" name="name" placeholder="John Smith" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required />
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" />
+            </div>
+            <div class="form-group">
+              <label for="vehicle">Vehicle (Year Make Model) *</label>
+              <input type="text" id="vehicle" name="vehicle" placeholder="2021 Honda Accord" required />
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="date">Preferred Date</label>
+              <input type="date" id="date" name="preferred_date" />
+            </div>
+            <div class="form-group">
+              <label for="address">Your Address *</label>
+              <input type="text" id="address" name="address" placeholder="123 Main St, Los Angeles, CA" required />
+            </div>
+          </div>
+
+          <hr class="form-divider" />
+
+          <label class="sub-label">
+            <input type="checkbox" name="maintenance_interest" value="Yes, interested in maintenance plan" />
+            I'm interested in a maintenance subscription plan
+          </label>
+
+          <div class="form-grid single">
+            <div class="form-group">
+              <label for="notes">Notes</label>
+              <textarea id="notes" name="message" placeholder="Anything else we should know? Special requests, access details, etc."></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit">Book Now →</button>
+          <p class="form-note">Takes 2 minutes. We'll confirm within 24 hours.</p>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ─── Check ?booked=1 ────────────────────────────
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('booked') === '1') {
+        document.getElementById('bookingFlow').style.display = 'none';
+        document.getElementById('successState').classList.add('show');
+      }
+    })();
+
+    // ─── Package selection ──────────────────────────
+    function selectPackage(service) {
+      // Update hidden input
+      document.getElementById('selectedServiceInput').value = service;
+
+      // Highlight selected card
+      document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
+      const id = service === 'Standard Detail' ? 'pkgStandard' : 'pkgPremium';
+      document.getElementById(id).classList.add('selected');
+
+      // Update step indicators
+      document.getElementById('stepDot1').classList.remove('active');
+      document.getElementById('stepDot1').classList.add('done');
+      document.getElementById('stepDot2').classList.add('active');
+      document.getElementById('stepLine1').classList.add('done');
+
+      // Reveal step 2
+      revealStep('step2');
+    }
+
+    // ─── Add-on toggling ────────────────────────────
+    function onAddonChange(checkbox) {
+      const card = checkbox.closest('.addon-card');
+      if (card) {
+        card.classList.toggle('checked', checkbox.checked);
+      }
+    }
+
+    // ─── Continue to step 3 ─────────────────────────
+    function revealStep3() {
+      // Update step indicators
+      document.getElementById('stepDot2').classList.remove('active');
+      document.getElementById('stepDot2').classList.add('done');
+      document.getElementById('stepDot3').classList.add('active');
+      document.getElementById('stepLine2').classList.add('done');
+
+      revealStep('step3');
+    }
+
+    // ─── Smooth reveal helper ───────────────────────
+    function revealStep(id) {
+      const el = document.getElementById(id);
+      if (!el || !el.classList.contains('step-hidden')) return;
+      el.classList.add('revealed');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          el.classList.add('visible');
+          setTimeout(() => {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 80);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

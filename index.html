@@ -629,7 +629,7 @@
       <span class="z-gold">Z</span>aragoza Detailz
     </a>
     <div class="nav-right">
-      <a href="#booking" class="btn-nav desktop-only">Book Now</a>
+      <a href="./book.html" class="btn-nav desktop-only">Book Now</a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
@@ -640,8 +640,8 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="#packages" onclick="closeMobileMenu()">Packages</a>
     <a href="#maintenance" onclick="closeMobileMenu()">Plans</a>
-    <a href="#booking" onclick="closeMobileMenu()">Booking</a>
-    <a href="#booking" class="btn-nav" onclick="closeMobileMenu()">Book Now</a>
+    <a href="./book.html" onclick="closeMobileMenu()">Booking</a>
+    <a href="./book.html" class="btn-nav" onclick="closeMobileMenu()">Book Now</a>
   </div>
 
   <!-- ─── HERO ─────────────────────────────────────── -->
@@ -651,7 +651,7 @@
       <span class="hero-tag">Mobile Detailing · Los Angeles</span>
       <h1 class="hero-headline">Detail That<br>Hits Different.</h1>
       <p class="hero-sub">Premium mobile detailing — we come to you, anywhere in LA.</p>
-      <a href="#booking" class="btn-hero">Book Your Detail</a>
+      <a href="./book.html" class="btn-hero">Book Your Detail</a>
     </div>
   </section>
 
@@ -720,134 +720,12 @@
     </div>
   </div>
 
-  <!-- ─── BOOKING FORM ──────────────────────────── -->
-  <section id="booking">
-    <div class="section-label fade-in">Get Started</div>
-    <h2 class="section-title fade-in">Book Your Detail</h2>
-
-    <div class="booking-card fade-in">
-
-      <!-- Success state -->
-      <div class="booking-success" id="bookingSuccess">
-        <div class="success-icon">✓</div>
-        <div class="success-title">You're Booked!</div>
-        <p class="success-sub">We'll confirm your appointment shortly. Check your email for details.</p>
-      </div>
-
-      <!-- Form -->
-      <form id="bookingForm" action="https://formsubmit.co/ZaragozaDetailz@gmail.com" method="POST">
-        <input type="hidden" name="_subject" value="New Booking - Zaragoza Detailz" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_next" value="https://armenzakane-lab.github.io/zaragoza-detailz/?booked=1" />
-        <input type="hidden" name="_template" value="table" />
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="name">Full Name *</label>
-            <input type="text" id="name" name="name" placeholder="John Smith" required />
-          </div>
-          <div class="form-group">
-            <label for="email">Email *</label>
-            <input type="email" id="email" name="email" placeholder="you@example.com" required />
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" />
-          </div>
-          <div class="form-group">
-            <label for="vehicle">Vehicle (Year Make Model) *</label>
-            <input type="text" id="vehicle" name="vehicle" placeholder="2021 Honda Accord" required />
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="date">Preferred Date</label>
-            <input type="date" id="date" name="preferred_date" />
-          </div>
-          <div class="form-group">
-            <label for="address">Your Location / Address *</label>
-            <input type="text" id="address" name="address" placeholder="123 Main St, Los Angeles, CA" required />
-          </div>
-        </div>
-
-        <hr class="form-divider" />
-
-        <div class="form-group" style="margin-bottom:20px;">
-          <label>Service</label>
-          <div class="radio-group">
-            <label class="radio-option">
-              <input type="radio" name="service" value="Standard Detail" required />
-              Standard Detail
-            </label>
-            <label class="radio-option">
-              <input type="radio" name="service" value="Premium Detail" />
-              Premium Detail
-            </label>
-          </div>
-        </div>
-
-        <hr class="form-divider" />
-
-        <div class="addons-title">Add-Ons</div>
-        <div class="addons-grid">
-          <label class="addon-option">
-            <input type="checkbox" name="addon_pet_hair" value="Pet Hair Removal (+$25)" />
-            Pet hair removal
-            <span class="addon-price">+$25</span>
-          </label>
-          <label class="addon-option">
-            <input type="checkbox" name="addon_engine_bay" value="Engine Bay Cleaning (+$50)" />
-            Engine bay cleaning
-            <span class="addon-price">+$50</span>
-          </label>
-          <label class="addon-option">
-            <input type="checkbox" name="addon_seat_extraction" value="Seat Extraction (+$50)" />
-            Seat extraction
-            <span class="addon-price">+$50</span>
-          </label>
-          <label class="addon-option">
-            <input type="checkbox" name="addon_clay_bar" value="Clay Bar Treatment (+$35)" />
-            Clay bar treatment
-            <span class="addon-price">+$35</span>
-          </label>
-          <label class="addon-option">
-            <input type="checkbox" name="addon_ceramic" value="Ceramic Sealant 1-3mo (+$25)" />
-            Ceramic sealant 1–3mo
-            <span class="addon-price">+$25</span>
-          </label>
-          <label class="addon-option">
-            <input type="checkbox" name="addon_trim" value="Trim Restoration (+$25)" />
-            Trim restoration
-            <span class="addon-price">+$25</span>
-          </label>
-          <label class="addon-option">
-            <input type="checkbox" name="addon_carpet" value="Carpet Extraction (+$85)" />
-            Carpet extraction
-            <span class="addon-price">+$85</span>
-          </label>
-        </div>
-
-        <hr class="form-divider" />
-
-        <label class="sub-option">
-          <input type="checkbox" name="maintenance_interest" value="Yes, interested in maintenance plan" />
-          I'm interested in a maintenance subscription plan
-        </label>
-
-        <div class="form-row single">
-          <div class="form-group">
-            <label for="message">Message / Notes</label>
-            <textarea id="message" name="message" placeholder="Anything else we should know? Special requests, access info, etc."></textarea>
-          </div>
-        </div>
-
-        <button type="submit" class="btn-submit">Book Now</button>
-      </form>
-    </div>
+  <!-- ─── BOOKING CTA ──────────────────────────── -->
+  <section style="padding:80px 24px;text-align:center;background:#0a0a0a">
+    <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#f59e0b;margin-bottom:16px">Ready?</p>
+    <h2 style="font-size:clamp(28px,4vw,48px);font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:16px">Book Your Detail</h2>
+    <p style="color:#888;font-size:16px;margin-bottom:32px;max-width:400px;margin-left:auto;margin-right:auto">Takes 2 minutes. We'll confirm within 24 hours.</p>
+    <a href="./book.html" style="display:inline-block;background:#f59e0b;color:#000;font-weight:800;font-size:16px;padding:16px 40px;border-radius:12px;text-decoration:none;letter-spacing:.3px">Book Now →</a>
   </section>
 
   <!-- ─── FOOTER ────────────────────────────────── -->
