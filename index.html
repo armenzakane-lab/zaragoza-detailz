@@ -629,6 +629,51 @@
     @media (max-width: 480px) {
       .hero-headline { font-size: 2.4rem; }
     }
+
+    /* ─── DESKTOP (1024px+) ────────────────────────── */
+    @media (min-width: 1024px) {
+      /* Nav */
+      nav { padding: 0 64px; }
+      .nav-logo { font-size: 1.1rem; }
+      .btn-nav.desktop-only { display: inline-block; }
+
+      /* Sections */
+      section { padding: 120px 64px; max-width: 1200px; }
+      #maintenance { padding: 120px 64px; }
+      #maintenance .inner { max-width: 1200px; }
+
+      /* Typography */
+      .section-title { font-size: 2.8rem; }
+
+      /* Hero */
+      .hero-content { max-width: 900px; }
+      .hero-sub { max-width: 600px; }
+
+      /* Packages — 4 columns, larger cards */
+      .packages-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; }
+      .pkg-card { padding: 40px 32px; }
+      .pkg-name { font-size: 1.2rem; }
+
+      /* Plans — 3 columns */
+      .plans-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+      /* Slideshow — cap height */
+      #workSlider { max-height: 600px; overflow: hidden; }
+      .fade-slide { aspect-ratio: unset; }
+      .fade-slide img { max-height: 600px; object-fit: contain; }
+
+      /* Footer — horizontal layout */
+      footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 48px 64px;
+        text-align: left;
+      }
+      .footer-logo { margin-bottom: 0; }
+      .footer-links { margin-bottom: 0; flex: 1; justify-content: center; }
+      .footer-copy { text-align: right; white-space: nowrap; }
+    }
   </style>
 </head>
 <body>

@@ -532,6 +532,36 @@
       text-align: center;
       margin-top: 14px;
     }
+
+    /* ─── DESKTOP (1024px+) ────────────────────────── */
+    @media (min-width: 1024px) {
+      /* Page container */
+      .page {
+        max-width: 800px;
+        padding: 64px 24px 100px;
+      }
+
+      /* Step indicator — larger dots, more spacing */
+      .step-dot { width: 32px; height: 32px; font-size: 0.85rem; }
+      .step-line { width: 120px; }
+
+      /* Package cards — 2×2 grid */
+      .pkg-cards { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+      .pkg-card { padding: 32px 28px; }
+
+      /* Add-ons — 3 columns */
+      .addons-grid { grid-template-columns: repeat(3, 1fr); }
+
+      /* Form — always 2 columns for short fields */
+      .form-grid { grid-template-columns: 1fr 1fr; }
+      .form-grid.single { grid-template-columns: 1fr; }
+
+      /* Calendar — centered, capped */
+      #customCal { max-width: 500px; margin-left: auto; margin-right: auto; }
+
+      /* Time slots — 4 columns */
+      #timeSlotGrid { grid-template-columns: repeat(4, 1fr) !important; }
+    }
   </style>
 </head>
 <body>
