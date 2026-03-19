@@ -736,6 +736,14 @@
                 <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"></div>
               </div>
               <div id="calSelectedDisplay" style="margin-top:10px;color:#fff;font-size:0.9rem;min-height:22px;"></div>
+
+              <!-- Time slot picker — shown after date selected -->
+              <div id="timeSlotWrap" style="display:none;margin-top:14px;">
+                <label style="font-size:13px;font-weight:600;color:#aaa;display:block;margin-bottom:8px;">Select a Time</label>
+                <input type="hidden" id="bookingTime" name="preferred_time" />
+                <div id="timeSlotGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;"></div>
+                <div id="timeErrMsg" style="display:none;color:#f43f5e;font-size:12px;margin-top:6px;">Please select a time slot.</div>
+              </div>
             </div>
             <div class="form-group">
               <label for="address">Your Address *</label>
@@ -898,6 +906,46 @@
         var display = dayNames2[selectedDate.getDay()] + ', ' + MONTH_NAMES[m] + ' ' + d + ', ' + y;
         document.getElementById('calSelectedDisplay').textContent = display;
         renderCalendar();
+        // Show time slots
+        renderTimeSlots();
+      }
+
+      function renderTimeSlots() {
+        var wrap = document.getElementById('timeSlotWrap');
+        var grid = document.getElementById('timeSlotGrid');
+        var hidden = document.getElementById('bookingTime');
+        if (!wrap || !grid) return;
+        // Generate slots: 6:00am to 7:00pm, every 2h30m
+        var slots = [];
+        var startMin = 6 * 60; // 6:00am
+        var endMin = 19 * 60;  // 7:00pm
+        var interval = 150;    // 2h30m in minutes
+        for (var m = startMin; m <= endMin; m += interval) {
+          var h = Math.floor(m / 60);
+          var min = m % 60;
+          var ampm = h < 12 ? 'AM' : 'PM';
+          var h12 = h % 12 || 12;
+          var label = h12 + (min > 0 ? ':' + String(min).padStart(2,'0') : '') + ' ' + ampm;
+          slots.push({ label: label, value: String(h).padStart(2,'0') + ':' + String(min).padStart(2,'0') });
+        }
+        grid.innerHTML = '';
+        hidden.value = '';
+        slots.forEach(function(slot) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.textContent = slot.label;
+          btn.style.cssText = 'background:#1a1a1a;border:1px solid #2a2a2a;color:#fff;padding:10px 6px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;';
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('#timeSlotGrid button').forEach(function(b) {
+              b.style.background='#1a1a1a'; b.style.borderColor='#2a2a2a'; b.style.color='#fff';
+            });
+            this.style.background='#2563eb'; this.style.borderColor='#2563eb'; this.style.color='#fff';
+            hidden.value = slot.value;
+            document.getElementById('timeErrMsg').style.display = 'none';
+          });
+          grid.appendChild(btn);
+        });
+        wrap.style.display = 'block';
       }
 
       function prevMonth() {
@@ -937,6 +985,13 @@
               disp.style.color = '#f43f5e';
               document.getElementById('customCal').scrollIntoView({ behavior: 'smooth', block: 'center' });
               setTimeout(function() { disp.style.color = '#fff'; disp.textContent = ''; }, 4000);
+              return;
+            }
+            var timeVal = document.getElementById('bookingTime').value;
+            if (!timeVal) {
+              e.preventDefault();
+              var errMsg = document.getElementById('timeErrMsg');
+              if (errMsg) { errMsg.style.display = 'block'; errMsg.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
             }
           });
         }
