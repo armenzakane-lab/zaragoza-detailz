@@ -825,8 +825,28 @@
         </div>
 
       </div>
+
+      <!-- Quick plan selector -->
+      <div style="margin-top:40px;max-width:480px;margin-left:auto;margin-right:auto;text-align:center;" class="fade-in">
+        <p style="font-size:13px;color:#555;margin-bottom:12px;">Want to add a maintenance plan to your booking?</p>
+        <div style="display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;">
+          <select id="mainPagePlanSel" style="background:#111;border:1px solid #222;color:#fff;padding:11px 16px;border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;cursor:pointer;flex:1;min-width:200px;appearance:none;">
+            <option value="">No maintenance plan</option>
+            <option value="weekly">Weekly — +$35/wk</option>
+            <option value="biweekly">Bi-Weekly — +$45/2wk</option>
+            <option value="monthly">Monthly — +$65/mo</option>
+          </select>
+          <button onclick="bookWithPlan()" style="background:#2563eb;color:#fff;font-weight:700;font-size:14px;padding:11px 22px;border:none;border-radius:8px;cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif;">Book Now →</button>
+        </div>
+      </div>
     </div>
   </div>
+  <script>
+    function bookWithPlan() {
+      var plan = document.getElementById('mainPagePlanSel').value;
+      window.location.href = plan ? './book.html?plan=' + plan : './book.html';
+    }
+  </script>
 
   <!-- ─── BOOKING CTA ──────────────────────────── -->
   <section style="padding:80px 24px;text-align:center;background:#0a0a0a">
