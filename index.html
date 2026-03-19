@@ -732,41 +732,33 @@
     <!-- Slideshow -->
     <!-- Crossfade slideshow -->
     <style>
-      .fade-slide { position:absolute;inset:0;opacity:0;transition:opacity 0.9s ease;aspect-ratio:3/2; }
+      .fade-slide { position:absolute;inset:0;opacity:0;transition:opacity 0.9s ease;aspect-ratio:3/4; }
       .fade-slide.active { opacity:1;position:relative; }
       #workSlider { position:relative;overflow:hidden;background:#111; }
     </style>
     <div id="workSlider">
-      <div class="fade-slide active" id="fs0">
-        <img src="./corvette.jpg" alt="Corvette C8 — Exterior Detail" style="width:100%;height:100%;object-fit:cover;object-position:center 55%;display:block;">
+      <div class="fade-slide active" id="fs0"><img src="./corvette.jpg" alt="Corvette C8 — Exterior Detail" style="width:100%;height:100%;object-fit:contain;background:#0a0a0a;object-position:center 55%;display:block;">
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">Corvette C8 — Exterior Detail</div>
       </div>
-      <div class="fade-slide" id="fs1">
-        <img src="./bmw-interior.jpg" alt="BMW M5 — Interior Detail" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;">
+      <div class="fade-slide" id="fs1"><img src="./bmw-interior.jpg" alt="BMW M5 — Interior Detail" style="width:100%;height:100%;object-fit:contain;background:#0a0a0a;object-position:center center;display:block;">
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">BMW M5 — Interior Detail</div>
       </div>
-      <div class="fade-slide" id="fs2">
-        <img src="./bmw-m5.jpg" alt="BMW M5 — Exterior Detail" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;">
+      <div class="fade-slide" id="fs2"><img src="./bmw-m5.jpg" alt="BMW M5 — Exterior Detail" style="width:100%;height:100%;object-fit:contain;background:#0a0a0a;object-position:center 40%;display:block;">
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">BMW M5 — Exterior Detail</div>
       </div>
-      <div class="fade-slide" id="fs3">
-        <img src="./jaguar-interior.jpg" alt="Jaguar F-Type — Interior Detail" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;">
+      <div class="fade-slide" id="fs3"><img src="./jaguar-interior.jpg" alt="Jaguar F-Type — Interior Detail" style="width:100%;height:100%;object-fit:contain;background:#0a0a0a;object-position:center center;display:block;">
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">Jaguar F-Type — Interior Detail</div>
       </div>
-      <div class="fade-slide" id="fs4">
-        <img src="./audi-r8.jpg" alt="Audi R8 — Interior Detail" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;">
+      <div class="fade-slide" id="fs4"><img src="./audi-r8.jpg" alt="Audi R8 — Interior Detail" style="width:100%;height:100%;object-fit:contain;background:#0a0a0a;object-position:center 25%;display:block;">
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">Audi R8 — Interior Detail</div>
       </div>
-      <div class="fade-slide" id="fs5">
-        <img src="./corvette-c6.jpg" alt="Corvette C6 — Interior Detail" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;">
+      <div class="fade-slide" id="fs5"><img src="./corvette-c6.jpg" alt="Corvette C6 — Interior Detail" style="width:100%;height:100%;object-fit:contain;background:#0a0a0a;object-position:center center;display:block;">
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">Corvette C6 — Interior Detail</div>
       </div>
-      <div class="fade-slide" id="fs6">
-        <img src="./mercedes-engine.jpg" alt="Mercedes — Engine Bay Detail" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;">
+      <div class="fade-slide" id="fs6"><img src="./mercedes-engine.jpg" alt="Mercedes — Engine Bay Detail" style="width:100%;height:100%;object-fit:contain;background:#0a0a0a;object-position:center center;display:block;">
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">Mercedes — Engine Bay Detail</div>
       </div>
-      <div class="fade-slide" id="fs7">
-        <img src="./audi-r8-grille.jpg" alt="Audi R8 — Detail Close-Up" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;">
+      <div class="fade-slide" id="fs7"><img src="./audi-r8-grille.jpg" alt="Audi R8 — Detail Close-Up" style="width:100%;height:100%;object-fit:contain;background:#0a0a0a;object-position:center 35%;display:block;">
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">Audi R8 — Detail Close-Up</div>
       </div>
       <!-- Prev / Next -->
