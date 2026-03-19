@@ -749,12 +749,21 @@
   </div>
 
   <script>
-    // ─── Check ?booked=1 ────────────────────────────
+    // ─── Check URL params ────────────────────────────
     (function () {
       const params = new URLSearchParams(window.location.search);
       if (params.get('booked') === '1') {
         document.getElementById('bookingFlow').style.display = 'none';
         document.getElementById('successState').classList.add('show');
+      }
+      // Pre-check maintenance subscription if coming from a plan link
+      const plan = params.get('plan');
+      if (plan) {
+        const subCheck = document.getElementById('fSubscription');
+        if (subCheck) subCheck.checked = true;
+        const planMap = { weekly: 'Weekly', biweekly: 'Bi-Weekly', monthly: 'Monthly' };
+        const notes = document.getElementById('fNotes');
+        if (notes && planMap[plan]) notes.value = 'Interested in ' + planMap[plan] + ' maintenance plan.';
       }
     })();
 
@@ -765,8 +774,9 @@
 
       // Highlight selected card
       document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
-      const id = service === 'Standard Detail' ? 'pkgStandard' : 'pkgPremium';
-      document.getElementById(id).classList.add('selected');
+      const idMap = { 'Standard Detail': 'pkgStandard', 'Premium Detail': 'pkgPremium', 'Exterior Detail': 'pkgExterior', 'Interior Detail': 'pkgInterior' };
+      const id = idMap[service];
+      if (id) document.getElementById(id).classList.add('selected');
 
       // Update step indicators
       document.getElementById('stepDot1').classList.remove('active');
