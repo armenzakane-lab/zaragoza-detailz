@@ -226,18 +226,9 @@
 
     /* ─── PACKAGES ─────────────────────────────────── */
     .packages-grid {
-      display: flex;
-      flex-direction: row;
-      overflow-x: auto;
-      gap: 16px;
-      padding-bottom: 8px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .packages-grid::-webkit-scrollbar { display: none; }
-    .packages-grid .pkg-card {
-      flex: 0 0 220px;
-      min-width: 220px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
     }
 
     .pkg-card {
@@ -614,8 +605,7 @@
       #maintenance { padding: 60px 20px; }
       #maintenance .inner { padding: 0; }
 
-      .packages-grid { gap: 12px; }
-      .packages-grid .pkg-card { flex: 0 0 180px; min-width: 180px; }
+      .packages-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
       .plans-grid { grid-template-columns: 1fr; gap: 12px; }
       .form-row { grid-template-columns: 1fr; }
       .addons-grid { grid-template-columns: 1fr; }
@@ -638,6 +628,7 @@
     }
 
     @media (max-width: 400px) {
+      .packages-grid { grid-template-columns: 1fr; }
       .hero-headline { font-size: 2rem; }
     }
   </style>
