@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zaragoza Detailz — Premium Mobile Auto Detailing · Los Angeles</title>
+  <meta name="description" content="Premium mobile auto detailing in Los Angeles. We come to you. Standard & Premium packages starting at $120. Book via Instagram or email." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a;
+      --black-2: #111111;
+      --black-3: #1a1a1a;
+      --black-4: #222222;
+      --gold: #f59e0b;
+      --gold-light: #fbbf24;
+      --gold-dim: rgba(245,158,11,0.15);
+      --gold-glow: rgba(245,158,11,0.08);
+      --white: #ffffff;
+      --gray: #a0a0a0;
+      --gray-light: #d0d0d0;
+      --border: rgba(255,255,255,0.07);
+      --border-gold: rgba(245,158,11,0.35);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --transition: 0.3s ease;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+
+    /* ─── Scrollbar ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+    /* ─── Utility ─── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 100px 0; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--gray);
+      max-width: 540px;
+    }
+    .section-header { margin-bottom: 60px; }
+    .gold { color: var(--gold); }
+
+    /* ─── Fade-in animation ─── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-in-delay-1 { transition-delay: 0.1s; }
+    .fade-in-delay-2 { transition-delay: 0.2s; }
+    .fade-in-delay-3 { transition-delay: 0.3s; }
+    .fade-in-delay-4 { transition-delay: 0.4s; }
+
+    /* ─── Buttons ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .btn-gold {
+      background: var(--gold);
+      color: var(--black);
+    }
+    .btn-gold:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 30px rgba(245,158,11,0.35);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.25);
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-1px);
+    }
+    .btn-outline-gold {
+      background: transparent;
+      color: var(--gold);
+      border: 1.5px solid var(--border-gold);
+    }
+    .btn-outline-gold:hover {
+      background: var(--gold-dim);
+      transform: translateY(-1px);
+    }
+
+    /* ─── NAV ─── */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s ease;
+    }
+    #nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,0.5); }
+    .nav-inner {
+      width: 100%;
+      max-width: 1160px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-wordmark {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .nav-wordmark span { color: var(--gold); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--gray-light);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { margin-left: 16px; }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 68px;
+      left: 0;
+      right: 0;
+      background: var(--black-2);
+      border-bottom: 1px solid var(--border);
+      z-index: 999;
+      padding: 24px;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--gray-light);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 68px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(245,158,11,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 70%, rgba(245,158,11,0.03) 0%, transparent 60%);
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      padding: 80px 0;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .hero-title {
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    .hero-title .line2 { color: var(--gold); }
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--gray);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 40px;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+    .trust-badges {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--gray);
+    }
+    .trust-badge-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    /* ─── SERVICES ─── */
+    #services { background: var(--black-2); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--black-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      transition: var(--transition);
+    }
+    .service-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(245,158,11,0.08);
+    }
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .service-icon svg { width: 26px; height: 26px; color: var(--gold); }
+    .service-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .service-card p { font-size: 0.9rem; color: var(--gray); line-height: 1.7; }
+
+    /* ─── PACKAGES ─── */
+    #packages { background: var(--black); }
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+    .pkg-card {
+      background: var(--black-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      position: relative;
+    }
+    .pkg-card.premium {
+      border-color: var(--gold);
+      box-shadow: 0 0 60px rgba(245,158,11,0.1);
+    }
+    .pkg-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--black);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .pkg-name {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .pkg-desc { font-size: 0.85rem; color: var(--gray); margin-bottom: 28px; }
+    .pkg-pricing {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .pkg-price-item {
+      flex: 1;
+      background: var(--black-4);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+    }
+    .pkg-price-label { font-size: 0.72rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .pkg-price-value { font-size: 1.6rem; font-weight: 800; color: var(--gold); }
+    .pkg-divider {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .pkg-features { margin-bottom: 16px; }
+    .pkg-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 7px 0;
+      font-size: 0.875rem;
+      color: var(--gray-light);
+      line-height: 1.4;
+    }
+    .pkg-feature-check {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      background: var(--gold-dim);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .pkg-feature-check svg { width: 10px; height: 10px; color: var(--gold); }
+    .pkg-rec {
+      font-size: 0.78rem;
+      color: var(--gray);
+      font-style: italic;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .pkg-cta { margin-top: 28px; width: 100%; justify-content: center; }
+
+    /* ─── ADD-ONS ─── */
+    #addons { background: var(--black-2); }
+    .addons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .addon-card {
+      background: var(--black-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: var(--transition);
+    }
+    .addon-card:hover {
+      border-color: var(--border-gold);
+      background: var(--black-4);
+    }
+    .addon-name { font-size: 0.9rem; font-weight: 500; }
+    .addon-price {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    /* ─── SUBSCRIPTIONS ─── */
+    #subscriptions { background: var(--black); }
+    .subs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .sub-card {
+      background: var(--black-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      text-align: center;
+      position: relative;
+      transition: var(--transition);
+    }
+    .sub-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(245,158,11,0.08);
+    }
+    .sub-card.popular {
+      border-color: var(--gold);
+      box-shadow: 0 0 50px rgba(245,158,11,0.1);
+    }
+    .sub-popular-badge {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--black);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .sub-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 22px;
+    }
+    .sub-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .sub-freq {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .sub-desc {
+      font-size: 0.875rem;
+      color: var(--gray);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .sub-perks { margin-bottom: 28px; text-align: left; }
+    .sub-perk {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 6px 0;
+      font-size: 0.855rem;
+      color: var(--gray-light);
+    }
+    .sub-perk-dot {
+      width: 6px;
+      height: 6px;
+      min-width: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      margin-top: 7px;
+    }
+    .sub-cta { width: 100%; justify-content: center; }
+
+    /* ─── WHY US ─── */
+    #why { background: var(--black-2); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .why-card {
+      background: var(--black-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .why-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-3px);
+    }
+    .why-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+    .why-stat {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .why-label {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .why-desc { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+    /* ─── BOOKING FORM ─── */
+    #booking { background: var(--black); }
+    .booking-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .booking-info h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 16px; line-height: 1.2; }
+    .booking-info p { font-size: 0.95rem; color: var(--gray); line-height: 1.7; margin-bottom: 32px; }
+    .booking-contact-btns { display: flex; flex-direction: column; gap: 12px; }
+    .booking-contact-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      background: var(--black-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: var(--transition);
+      cursor: pointer;
+      color: var(--white);
+    }
+    .booking-contact-btn:hover { border-color: var(--border-gold); background: var(--black-4); }
+    .booking-contact-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Form */
+    .booking-form-wrap {
+      background: var(--black-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+    }
+    .form-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--black-4);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      color: var(--white);
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: border-color var(--transition);
+      outline: none;
+      -webkit-appearance: none;
+    }
+    .form-group select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+    .form-group select option { background: var(--black-3); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      margin-bottom: 24px;
+    }
+    .form-check input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      accent-color: var(--gold);
+      margin-top: 2px;
+      cursor: pointer;
+    }
+    .form-check-label {
+      font-size: 0.875rem;
+      color: var(--gray-light);
+      line-height: 1.5;
+    }
+    .form-submit {
+      width: 100%;
+      justify-content: center;
+      padding: 15px 28px;
+      font-size: 1rem;
+    }
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .form-success-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--gold-dim);
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 28px;
+    }
+    .form-success h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; }
+    .form-success p { color: var(--gray); font-size: 0.9rem; }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--black-2); }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .contact-info h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 16px; line-height: 1.2; }
+    .contact-info p { font-size: 0.95rem; color: var(--gray); line-height: 1.7; margin-bottom: 36px; }
+    .contact-ways { display: flex; flex-direction: column; gap: 16px; }
+    .contact-way {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 22px;
+      background: var(--black-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+    .contact-way:hover { border-color: var(--border-gold); transform: translateX(4px); }
+    .contact-way-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .contact-way-info h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; }
+    .contact-way-info p { font-size: 0.82rem; color: var(--gray); margin: 0; }
+    .contact-area {
+      background: var(--black-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      text-align: center;
+    }
+    .contact-area-icon { font-size: 3rem; margin-bottom: 16px; }
+    .contact-area h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; }
+    .contact-area p { font-size: 0.9rem; color: var(--gray); line-height: 1.7; margin-bottom: 8px; }
+    .contact-area .highlight {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+    }
+    .footer-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-wordmark { font-size: 1.1rem; font-weight: 800; }
+    .footer-wordmark span { color: var(--gold); }
+    .footer-tagline { font-size: 0.78rem; color: var(--gray); margin-top: 4px; }
+    .footer-links { display: flex; gap: 20px; align-items: center; }
+    .footer-links a {
+      font-size: 0.82rem;
+      color: var(--gray);
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.25); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .packages-grid { grid-template-columns: 1fr; max-width: 500px; }
+      .subs-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .booking-inner { grid-template-columns: 1fr; gap: 40px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      .section { padding: 72px 0; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .services-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .booking-form-wrap { padding: 28px 20px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .hero-title { font-size: 2.6rem; }
+      .hero-ctas { flex-direction: column; }
+      .hero-ctas .btn { width: 100%; justify-content: center; }
+      .why-grid { grid-template-columns: 1fr; }
+      .pkg-card, .sub-card { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ─── -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-wordmark">Zaragoza<span>Detailz</span></a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#addons">Add-Ons</a></li>
+        <li><a href="#subscriptions">Plans</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#booking" class="btn btn-gold nav-cta">Book Now</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services" onclick="closeMobile()">Services</a>
+    <a href="#packages" onclick="closeMobile()">Packages</a>
+    <a href="#addons" onclick="closeMobile()">Add-Ons</a>
+    <a href="#subscriptions" onclick="closeMobile()">Plans</a>
+    <a href="#contact" onclick="closeMobile()">Contact</a>
+    <a href="#booking" class="btn btn-gold" onclick="closeMobile()">Book Now</a>
+  </div>
+
+  <!-- ─── HERO ─── -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-badge">Mobile Auto Detailing · Los Angeles</div>
+        <h1 class="hero-title">
+          Your Car<br>
+          <span class="line2">Deserves<br>the Best.</span>
+        </h1>
+        <p class="hero-sub">Premium mobile detailing — we come to you, anywhere in Los Angeles. Professional-grade care, without leaving your driveway.</p>
+        <div class="hero-ctas">
+          <a href="#packages" class="btn btn-gold">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+            View Packages
+          </a>
+          <a href="https://www.instagram.com/ZaragozaDetailz/" target="_blank" rel="noopener" class="btn btn-outline">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            Book on Instagram
+          </a>
+        </div>
+        <div class="trust-badges">
+          <div class="trust-badge">
+            <div class="trust-badge-icon">🚗</div>
+            Mobile Service
+          </div>
+          <div class="trust-badge">
+            <div class="trust-badge-icon">📍</div>
+            LA Area
+          </div>
+          <div class="trust-badge">
+            <div class="trust-badge-icon">✉️</div>
+            Free Estimates
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SERVICES ─── -->
+  <section id="services" class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">What We Do</div>
+        <h2 class="section-title">Full-Service <span class="gold">Detailing</span></h2>
+        <p class="section-sub">Everything your vehicle needs, delivered to your door. No appointment at a shop. No waiting.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card fade-in fade-in-delay-1">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M3 12h18M5 12c0-3.87 3.13-7 7-7s7 3.13 7 7c0 1.93-.78 3.68-2.05 4.95"/><path d="M5 16.95A6.978 6.978 0 013 12"/><circle cx="12" cy="19" r="1"/><path d="M9 19H7m10 0h-2"/>
+            </svg>
+          </div>
+          <h3>Exterior Detailing</h3>
+          <p>Hand wash & dry with foam bath, wheel & tire cleaning, tire shine, spray wax or sealant protection, window cleaning, and door jamb wipe down. Your exterior will shine like new.</p>
+        </div>
+        <div class="service-card fade-in fade-in-delay-2">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 6V4a2 2 0 012-2h8a2 2 0 012 2v2"/><path d="M8 11h8M8 14h5"/>
+            </svg>
+          </div>
+          <h3>Interior Detailing</h3>
+          <p>Full vacuum of seats, carpets and trunk, dash & console wipe down, interior window cleaning, steam cleaning on high-touch surfaces, leather conditioning, and deep stain removal.</p>
+        </div>
+        <div class="service-card fade-in fade-in-delay-3">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/>
+            </svg>
+          </div>
+          <h3>Paint Protection</h3>
+          <p>Clay bar treatment to remove bonded contaminants, followed by professional sealant or ceramic coating for long-lasting gloss and protection. Keep your paint looking pristine.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PACKAGES ─── -->
+  <section id="packages" class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Pricing</div>
+        <h2 class="section-title">Choose Your <span class="gold">Package</span></h2>
+        <p class="section-sub">Transparent pricing, no surprises. Select the package that fits your vehicle and needs.</p>
+      </div>
+      <div class="packages-grid">
+
+        <!-- Standard -->
+        <div class="pkg-card fade-in fade-in-delay-1">
+          <div class="pkg-name">Standard Detail</div>
+          <div class="pkg-desc">Maintenance clean — recommended every 4–6 weeks</div>
+          <div class="pkg-pricing">
+            <div class="pkg-price-item">
+              <div class="pkg-price-label">Sedan</div>
+              <div class="pkg-price-value">$120</div>
+            </div>
+            <div class="pkg-price-item">
+              <div class="pkg-price-label">SUV / Truck</div>
+              <div class="pkg-price-value">$140</div>
+            </div>
+          </div>
+
+          <div class="pkg-divider">Exterior</div>
+          <div class="pkg-features">
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Hand wash & dry (foam bath)</div>
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Wheels & tires cleaned</div>
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Tire shine applied</div>
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Spray wax protection (1–2 months)</div>
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Exterior windows cleaned</div>
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Door jamb wipe down</div>
+          </div>
+
+          <div class="pkg-divider">Interior</div>
+          <div class="pkg-features">
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Full vacuum (seats, carpets, trunk)</div>
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Dash, console & panel wipe down</div>
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Interior window cleaning</div>
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Light stain spot treatment</div>
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Air freshener included</div>
+          </div>
+
+          <div class="pkg-rec">★ Recommended every 4–6 weeks for maintenance</div>
+          <a href="#booking" class="btn btn-outline-gold pkg-cta">Book Standard</a>
+        </div>
+
+        <!-- Premium -->
+        <div class="pkg-card premium fade-in fade-in-delay-2">
+          <div class="pkg-badge">⭐ Most Popular</div>
+          <div class="pkg-name" style="color:var(--gold)">Premium Detail</div>
+          <div class="pkg-desc">Full restoration — recommended every 4–6 months</div>
+          <div class="pkg-pricing">
+            <div class="pkg-price-item">
+              <div class="pkg-price-label">Sedan</div>
+              <div class="pkg-price-value">$220</div>
+            </div>
+            <div class="pkg-price-item">
+              <div class="pkg-price-label">SUV / Truck</div>
+              <div class="pkg-price-value">$260</div>
+            </div>
+          </div>
+
+          <div class="pkg-divider">Everything in Standard, PLUS:</div>
+          <div class="pkg-divider" style="border:none;padding:0;margin-bottom:10px;">Exterior Upgrades</div>
+          <div class="pkg-features">
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Clay bar treatment</div>
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>6-month sealant protection</div>
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Trim restoration (basic)</div>
+          </div>
+
+          <div class="pkg-divider" style="margin-top:8px;">Interior Upgrades</div>
+          <div class="pkg-features">
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Deep shampoo (seats & carpets)</div>
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Steam cleaning (high-touch areas)</div>
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Leather clean & condition</div>
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Deep stain removal</div>
+            <div class="pkg-feature"><div class="pkg-feature-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>Crevice & brush detail work</div>
+          </div>
+
+          <div class="pkg-rec" style="border-color:rgba(245,158,11,0.2)">★ Recommended every 4–6 months — restores shine & refreshes interior</div>
+          <a href="#booking" class="btn btn-gold pkg-cta">Book Premium</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ADD-ONS ─── -->
+  <section id="addons" class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Extras</div>
+        <h2 class="section-title">Power-Up with <span class="gold">Add-Ons</span></h2>
+        <p class="section-sub">Customize your detail with any of our premium add-on services.</p>
+      </div>
+      <div class="addons-grid">
+        <div class="addon-card fade-in"><span class="addon-name">🐾 Pet Hair Removal</span><span class="addon-price">+$25</span></div>
+        <div class="addon-card fade-in fade-in-delay-1"><span class="addon-name">🔧 Engine Bay Cleaning</span><span class="addon-price">+$50</span></div>
+        <div class="addon-card fade-in fade-in-delay-2"><span class="addon-name">💺 Seat Extraction</span><span class="addon-price">+$50</span></div>
+        <div class="addon-card fade-in fade-in-delay-3"><span class="addon-name">🧱 Clay Bar Treatment</span><span class="addon-price">+$35</span></div>
+        <div class="addon-card fade-in"><span class="addon-name">🛡️ Ceramic Sealant (1–3 mo.)</span><span class="addon-price">+$25</span></div>
+        <div class="addon-card fade-in fade-in-delay-1"><span class="addon-name">✨ Trim Restoration</span><span class="addon-price">+$25</span></div>
+        <div class="addon-card fade-in fade-in-delay-2"><span class="addon-name">🧹 Carpet Extraction</span><span class="addon-price">+$85</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SUBSCRIPTIONS ─── -->
+  <section id="subscriptions" class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Maintenance Plans</div>
+        <h2 class="section-title">Never Drive a <span class="gold">Dirty Car</span> Again</h2>
+        <p class="section-sub">Subscribe to a recurring detail plan and keep your vehicle looking its best year-round — at a consistent, priority schedule.</p>
+      </div>
+      <div class="subs-grid">
+
+        <!-- Weekly -->
+        <div class="sub-card fade-in fade-in-delay-1">
+          <div class="sub-icon">📅</div>
+          <div class="sub-freq">Weekly</div>
+          <div class="sub-title">Weekly Plan</div>
+          <div class="sub-desc">Perfect for daily drivers, rideshare vehicles, and car enthusiasts who demand perfection at all times.</div>
+          <div class="sub-perks">
+            <div class="sub-perk"><div class="sub-perk-dot"></div>Full exterior wash & dry every week</div>
+            <div class="sub-perk"><div class="sub-perk-dot"></div>Interior vacuum & wipe down</div>
+            <div class="sub-perk"><div class="sub-perk-dot"></div>Priority scheduling</div>
+            <div class="sub-perk"><div class="sub-perk-dot"></div>Consistent shine & protection</div>
+            <div class="sub-perk"><div class="sub-perk-dot"></div>Best for: show cars, rideshare, daily drivers</div>
+          </div>
+          <a href="mailto:ZaragozaDetailz@gmail.com?subject=Maintenance%20Subscription%20-%20Weekly" class="btn btn-outline-gold sub-cta">Subscribe — Weekly</a>
+        </div>
+
+        <!-- Bi-Weekly -->
+        <div class="sub-card popular fade-in fade-in-delay-2">
+          <div class="sub-popular-badge">⭐ Most Popular</div>
+          <div class="sub-icon">🔄</div>
+          <div class="sub-freq">Bi-Weekly</div>
+          <div class="sub-title">Bi-Weekly Plan</div>
+          <div class="sub-desc">Our most popular plan — keeps your car fresh and clean without the daily-driver frequency.</div>
+          <div class="sub-perks">
+            <div class="sub-perk"><div class="sub-perk-dot"></div>Full detail every two weeks</div>
+            <div class="sub-perk"><div class="sub-perk-dot"></div>Interior & exterior included</div>
+            <div class="sub-perk"><div class="sub-perk-dot"></div>Recurring protection treatments</div>
+            <div class="sub-perk"><div class="sub-perk-dot"></div>Priority scheduling & reminders</div>
+            <div class="sub-perk"><div class="sub-perk-dot"></div>Best for: most vehicle owners</div>
+          </div>
+          <a href="mailto:ZaragozaDetailz@gmail.com?subject=Maintenance%20Subscription%20-%20Bi-Weekly" class="btn btn-gold sub-cta">Subscribe — Bi-Weekly</a>
+        </div>
+
+        <!-- Monthly -->
+        <div class="sub-card fade-in fade-in-delay-3">
+          <div class="sub-icon">🗓️</div>
+          <div class="sub-freq">Monthly</div>
+          <div class="sub-title">Monthly Plan</div>
+          <div class="sub-desc">Great for low-mileage vehicles or as a premium monthly refresh to keep things pristine.</div>
+          <div class="sub-perks">
+            <div class="sub-perk"><div class="sub-perk-dot"></div>Full detail once a month</div>
+            <div class="sub-perk"><div class="sub-perk-dot"></div>Deep clean each visit</div>
+            <div class="sub-perk"><div class="sub-perk-dot"></div>Sealant refresh included</div>
+            <div class="sub-perk"><div class="sub-perk-dot"></div>Scheduled at your convenience</div>
+            <div class="sub-perk"><div class="sub-perk-dot"></div>Best for: weekend / low-mileage vehicles</div>
+          </div>
+          <a href="mailto:ZaragozaDetailz@gmail.com?subject=Maintenance%20Subscription%20-%20Monthly" class="btn btn-outline-gold sub-cta">Subscribe — Monthly</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── WHY US ─── -->
+  <section id="why" class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Why Zaragoza Detailz</div>
+        <h2 class="section-title">The <span class="gold">Difference</span> Is in the Details</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-card fade-in fade-in-delay-1">
+          <div class="why-icon">🚐</div>
+          <div class="why-stat">100%</div>
+          <div class="why-label">Mobile Service</div>
+          <div class="why-desc">We bring everything to your driveway, office, or wherever works for you. Zero hassle.</div>
+        </div>
+        <div class="why-card fade-in fade-in-delay-2">
+          <div class="why-icon">✨</div>
+          <div class="why-stat">Pro</div>
+          <div class="why-label">Quality Products</div>
+          <div class="why-desc">Professional-grade detailing products only — clay bars, foam cannons, ceramic sealants.</div>
+        </div>
+        <div class="why-card fade-in fade-in-delay-3">
+          <div class="why-icon">💰</div>
+          <div class="why-stat">Fair</div>
+          <div class="why-label">Honest Pricing</div>
+          <div class="why-desc">What you see is what you pay. Transparent pricing, no hidden fees, free estimates always.</div>
+        </div>
+        <div class="why-card fade-in fade-in-delay-4">
+          <div class="why-icon">📍</div>
+          <div class="why-stat">LA</div>
+          <div class="why-label">LA Trusted</div>
+          <div class="why-desc">Serving all of Los Angeles — from the valleys to the coast. Your neighborhood, our territory.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── BOOKING FORM ─── -->
+  <section id="booking" class="section">
+    <div class="container">
+      <div class="booking-inner">
+
+        <!-- Left: info -->
+        <div class="booking-info fade-in">
+          <div class="section-label">Book Your Detail</div>
+          <h2>Ready to Book? <span class="gold">Let's Go.</span></h2>
+          <p>Fill out the form and we'll reach out within 24 hours to confirm your appointment. Or, hit us up directly on Instagram or email — whatever's easiest.</p>
+          <div class="booking-contact-btns">
+            <a href="https://www.instagram.com/ZaragozaDetailz/" target="_blank" rel="noopener" class="booking-contact-btn">
+              <div class="booking-contact-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#f59e0b" stroke="none"/></svg>
+              </div>
+              <div>
+                <div style="font-weight:600">DM on Instagram</div>
+                <div style="font-size:0.78rem;color:var(--gray)">@ZaragozaDetailz</div>
+              </div>
+            </a>
+            <a href="mailto:ZaragozaDetailz@gmail.com" class="booking-contact-btn">
+              <div class="booking-contact-icon">✉️</div>
+              <div>
+                <div style="font-weight:600">Send an Email</div>
+                <div style="font-size:0.78rem;color:var(--gray)">ZaragozaDetailz@gmail.com</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: form -->
+        <div class="booking-form-wrap fade-in fade-in-delay-2">
+          <div class="form-title">📋 Request a Booking</div>
+
+          <form id="bookingForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">Full Name *</label>
+                <input type="text" id="fname" name="fname" placeholder="Your full name" required />
+              </div>
+              <div class="form-group">
+                <label for="femail">Email Address *</label>
+                <input type="email" id="femail" name="femail" placeholder="you@example.com" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fphone">Phone Number</label>
+                <input type="tel" id="fphone" name="fphone" placeholder="(123) 456-7890" />
+              </div>
+              <div class="form-group">
+                <label for="fvehicle">Vehicle (Year, Make, Model) *</label>
+                <input type="text" id="fvehicle" name="fvehicle" placeholder="e.g. 2021 Toyota Camry" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="fservice">Service Type *</label>
+              <select id="fservice" name="fservice" required>
+                <option value="" disabled selected>Select a service...</option>
+                <option value="standard">Standard Detail — Sedan $120 / SUV·Truck $140</option>
+                <option value="premium">Premium Detail — Sedan $220 / SUV·Truck $260</option>
+                <option value="addons">Add-Ons Only</option>
+                <option value="other">Not sure — want a quote</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fdate">Preferred Date</label>
+                <input type="date" id="fdate" name="fdate" />
+              </div>
+              <div class="form-group">
+                <label for="flocation">Your Location / Address *</label>
+                <input type="text" id="flocation" name="flocation" placeholder="City or full address" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="fmessage">Message / Special Requests</label>
+              <textarea id="fmessage" name="fmessage" placeholder="Any specific concerns, stains, add-ons, or other details..."></textarea>
+            </div>
+
+            <label class="form-check">
+              <input type="checkbox" id="fsub" name="fsub" />
+              <span class="form-check-label">I'm interested in a <strong>maintenance subscription plan</strong> (weekly, bi-weekly, or monthly).</span>
+            </label>
+
+            <button type="submit" class="btn btn-gold form-submit">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+              Send Booking Request
+            </button>
+          </form>
+
+          <div class="form-success" id="formSuccess">
+            <div class="form-success-icon">✅</div>
+            <h3>Request Sent!</h3>
+            <p>We'll contact you within 24 hours to confirm your booking. Check your DMs or email for a reply from Zaragoza Detailz.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="contact-info fade-in">
+          <div class="section-label">Get in Touch</div>
+          <h2>We're Always <span class="gold">Here for You</span></h2>
+          <p>Questions about a service, want a free estimate, or just want to say hey — reach out anytime. We respond fast.</p>
+          <div class="contact-ways">
+            <a href="https://www.instagram.com/ZaragozaDetailz/" target="_blank" rel="noopener" class="contact-way">
+              <div class="contact-way-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#f59e0b" stroke="none"/></svg>
+              </div>
+              <div class="contact-way-info">
+                <h4>Instagram DM</h4>
+                <p>@ZaragozaDetailz — fastest response</p>
+              </div>
+            </a>
+            <a href="mailto:ZaragozaDetailz@gmail.com" class="contact-way">
+              <div class="contact-way-icon">✉️</div>
+              <div class="contact-way-info">
+                <h4>Email</h4>
+                <p>ZaragozaDetailz@gmail.com</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-area fade-in fade-in-delay-2">
+          <div class="contact-area-icon">📍</div>
+          <h3>Serving All of <span class="gold">Los Angeles</span></h3>
+          <p>We're fully mobile — no shop, no commute, no hassle.</p>
+          <p class="highlight">We come to YOU.</p>
+          <p style="color:var(--gray);font-size:0.85rem">Anywhere in the greater Los Angeles area.<br>DM us for availability in your neighborhood.</p>
+          <br>
+          <a href="https://www.instagram.com/ZaragozaDetailz/" target="_blank" rel="noopener" class="btn btn-gold" style="width:100%;justify-content:center;margin-top:8px">
+            DM for a Free Estimate
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-wordmark">Zaragoza<span>Detailz</span></div>
+        <div class="footer-tagline">Premium Mobile Auto Detailing · Los Angeles</div>
+      </div>
+      <div class="footer-links">
+        <a href="#services">Services</a>
+        <a href="#packages">Packages</a>
+        <a href="#subscriptions">Plans</a>
+        <a href="https://www.instagram.com/ZaragozaDetailz/" target="_blank" rel="noopener">Instagram</a>
+        <a href="mailto:ZaragozaDetailz@gmail.com">Email</a>
+      </div>
+      <div class="footer-copy">© 2026 Zaragoza Detailz. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // ─── Nav scroll effect ───
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // ─── Hamburger / mobile menu ───
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    function closeMobile() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    }
+
+    // ─── Fade-in on scroll ───
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    fadeEls.forEach(el => observer.observe(el));
+
+    // ─── Booking form ───
+    const bookingForm = document.getElementById('bookingForm');
+    const formSuccess = document.getElementById('formSuccess');
+    bookingForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      bookingForm.style.display = 'none';
+      formSuccess.style.display = 'block';
+      // Scroll into view
+      formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    // ─── Date input min = today ───
+    const dateInput = document.getElementById('fdate');
+    if (dateInput) {
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.min = today;
+    }
+  </script>
+
+</body>
+</html>
