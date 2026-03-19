@@ -723,9 +723,19 @@
 
           <div class="form-grid">
             <div class="form-group">
-              <label for="date">Preferred Date</label>
-              <input type="date" id="date" name="preferred_date" min="2026-03-20" style="text-align:left;" />
-              <div id="dateErrMsg" style="display:none;color:#f43f5e;font-size:12px;margin-top:6px;">Please select a future date — same-day bookings are not available.</div>
+              <label>Preferred Date</label>
+              <input type="hidden" id="date" name="preferred_date" />
+              <!-- Custom Calendar Widget -->
+              <div id="customCal" style="background:#111;border:1px solid #1f1f1f;border-radius:12px;padding:16px;user-select:none;-webkit-user-select:none;">
+                <div id="calHeader" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                  <button type="button" id="calPrev" aria-label="Previous month" style="background:none;border:none;color:#2563eb;font-size:1.4rem;cursor:pointer;padding:6px 12px;border-radius:8px;line-height:1;min-width:40px;min-height:40px;">&#8592;</button>
+                  <div id="calMonthYear" style="color:#fff;font-weight:700;font-size:1rem;"></div>
+                  <button type="button" id="calNext" aria-label="Next month" style="background:none;border:none;color:#2563eb;font-size:1.4rem;cursor:pointer;padding:6px 12px;border-radius:8px;line-height:1;min-width:40px;min-height:40px;">&#8594;</button>
+                </div>
+                <div id="calDayNames" style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;margin-bottom:6px;"></div>
+                <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;"></div>
+              </div>
+              <div id="calSelectedDisplay" style="margin-top:10px;color:#fff;font-size:0.9rem;min-height:22px;"></div>
             </div>
             <div class="form-group">
               <label for="address">Your Address *</label>
@@ -808,29 +818,127 @@
   </div>
 
   <script>
-    // ─── Set date min to tomorrow (iOS safe) ─────────
+    // ─── Custom Calendar Widget ──────────────────────
     (function() {
-      const dateEl = document.getElementById('date');
-      if (!dateEl) return;
-      const getTomorrow = () => {
-        const d = new Date();
-        d.setDate(d.getDate() + 1);
-        return d.toISOString().split('T')[0];
-      };
-      dateEl.min = getTomorrow();
-      dateEl.style.textAlign = 'left';
-      // iOS ignores min attr — validate on change
-      dateEl.addEventListener('change', function() {
-        const today = new Date();
-        today.setHours(0,0,0,0);
-        const selected = new Date(this.value + 'T00:00:00');
-        if (selected <= today) {
-          this.value = getTomorrow();
-          this.style.borderColor = '#f43f5e';
-          const msg = document.getElementById('dateErrMsg');
-          if (msg) { msg.style.display = 'block'; setTimeout(() => { msg.style.display = 'none'; this.style.borderColor = ''; }, 3000); }
-        } else {
-          this.style.borderColor = '';
+      var DAY_NAMES = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      var MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      var today = new Date(); today.setHours(0,0,0,0);
+      var calYear, calMonth;
+      var selectedDate = null;
+
+      function initCal() {
+        var tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1);
+        calYear = tomorrow.getFullYear();
+        calMonth = tomorrow.getMonth();
+        renderDayNames();
+        renderCalendar();
+        document.getElementById('calPrev').addEventListener('click', function(){ prevMonth(); });
+        document.getElementById('calNext').addEventListener('click', function(){ nextMonth(); });
+      }
+
+      function renderDayNames() {
+        var dn = document.getElementById('calDayNames');
+        dn.innerHTML = '';
+        DAY_NAMES.forEach(function(d) {
+          var el = document.createElement('div');
+          el.textContent = d;
+          el.style.cssText = 'color:#555;font-size:0.72rem;font-weight:700;text-transform:uppercase;padding:4px 0;text-align:center;letter-spacing:0.04em;';
+          dn.appendChild(el);
+        });
+      }
+
+      function renderCalendar() {
+        document.getElementById('calMonthYear').textContent = MONTH_NAMES[calMonth] + ' ' + calYear;
+        var grid = document.getElementById('calGrid');
+        grid.innerHTML = '';
+        var firstDay = new Date(calYear, calMonth, 1).getDay();
+        var daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+        // Leading empty cells
+        for (var i = 0; i < firstDay; i++) {
+          var empty = document.createElement('div');
+          empty.style.cssText = 'min-height:40px;';
+          grid.appendChild(empty);
+        }
+        for (var d = 1; d <= daysInMonth; d++) {
+          var cellDate = new Date(calYear, calMonth, d);
+          var isDisabled = cellDate <= today;
+          var isSelected = selectedDate &&
+            selectedDate.getFullYear() === calYear &&
+            selectedDate.getMonth() === calMonth &&
+            selectedDate.getDate() === d;
+          var cell = document.createElement('button');
+          cell.type = 'button';
+          cell.textContent = d;
+          var baseStyle = 'min-width:40px;min-height:40px;width:100%;border:none;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:background 0.15s,color 0.15s;display:flex;align-items:center;justify-content:center;font-family:inherit;-webkit-tap-highlight-color:transparent;';
+          if (isSelected) {
+            cell.style.cssText = baseStyle + 'background:#2563eb;color:#fff;';
+          } else if (isDisabled) {
+            cell.style.cssText = baseStyle + 'background:transparent;color:#333;cursor:not-allowed;';
+            cell.disabled = true;
+          } else {
+            cell.style.cssText = baseStyle + 'background:transparent;color:#fff;';
+            cell.setAttribute('data-d', d);
+            cell.addEventListener('mouseenter', function(){ if(!this.disabled) this.style.background='rgba(37,99,235,0.25)'; });
+            cell.addEventListener('mouseleave', function(){ if(!this.disabled && !this.classList.contains('cal-sel')) this.style.background='transparent'; });
+            cell.addEventListener('click', function() { selectCalDate(calYear, calMonth, parseInt(this.getAttribute('data-d'))); });
+          }
+          grid.appendChild(cell);
+        }
+      }
+
+      function selectCalDate(y, m, d) {
+        selectedDate = new Date(y, m, d);
+        // Format YYYY-MM-DD
+        var mm = String(m + 1).padStart(2, '0');
+        var dd = String(d).padStart(2, '0');
+        var val = y + '-' + mm + '-' + dd;
+        document.getElementById('date').value = val;
+        // Human-readable display
+        var dayNames2 = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        var display = dayNames2[selectedDate.getDay()] + ', ' + MONTH_NAMES[m] + ' ' + d + ', ' + y;
+        document.getElementById('calSelectedDisplay').textContent = display;
+        renderCalendar();
+      }
+
+      function prevMonth() {
+        calMonth--;
+        if (calMonth < 0) { calMonth = 11; calYear--; }
+        // Don't go before current month
+        var now = new Date(); now.setHours(0,0,0,0);
+        if (calYear < now.getFullYear() || (calYear === now.getFullYear() && calMonth < now.getMonth())) {
+          calMonth = now.getMonth(); calYear = now.getFullYear();
+        }
+        renderCalendar();
+      }
+
+      function nextMonth() {
+        calMonth++;
+        if (calMonth > 11) { calMonth = 0; calYear++; }
+        renderCalendar();
+      }
+
+      // Wait for DOM
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCal);
+      } else {
+        initCal();
+      }
+
+      // Form validation: require date selected
+      document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('bookingForm');
+        if (form) {
+          form.addEventListener('submit', function(e) {
+            var dateVal = document.getElementById('date').value;
+            if (!dateVal) {
+              e.preventDefault();
+              var disp = document.getElementById('calSelectedDisplay');
+              disp.textContent = 'Please select a preferred date.';
+              disp.style.color = '#f43f5e';
+              document.getElementById('customCal').scrollIntoView({ behavior: 'smooth', block: 'center' });
+              setTimeout(function() { disp.style.color = '#fff'; disp.textContent = ''; }, 4000);
+            }
+          });
         }
       });
     })();
