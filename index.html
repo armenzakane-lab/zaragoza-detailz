@@ -227,8 +227,8 @@
     /* ─── PACKAGES ─────────────────────────────────── */
     .packages-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
     }
 
     .pkg-card {
@@ -605,7 +605,7 @@
       #maintenance { padding: 72px 20px; }
       #maintenance .inner { padding: 0; }
 
-      .packages-grid { grid-template-columns: 1fr; }
+      .packages-grid { grid-template-columns: 1fr 1fr; }
       .plans-grid { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
       .addons-grid { grid-template-columns: 1fr; }
@@ -660,6 +660,32 @@
     <div class="section-label fade-in">Services</div>
     <h2 class="section-title fade-in">Pick Your Package</h2>
     <div class="packages-grid">
+
+      <div class="pkg-card fade-in">
+        <div class="pkg-name">Exterior Detail</div>
+        <div class="pkg-price">$45</div>
+        <ul class="pkg-list">
+          <li>Foam hand wash</li>
+          <li>Wheels &amp; tires cleaned</li>
+          <li>Tire shine</li>
+          <li>Exterior windows</li>
+          <li>Spray wax protection</li>
+        </ul>
+        <div style="font-size:11px;color:#666;margin-top:12px">Every 2–4 weeks</div>
+      </div>
+
+      <div class="pkg-card fade-in">
+        <div class="pkg-name">Interior Detail</div>
+        <div class="pkg-price">$85</div>
+        <ul class="pkg-list">
+          <li>Full vacuum (seats, carpets, trunk)</li>
+          <li>Wipe down all surfaces</li>
+          <li>Cupholders &amp; door panels</li>
+          <li>Interior windows</li>
+          <li>Light stain removal</li>
+          <li>Air freshener</li>
+        </ul>
+      </div>
 
       <div class="pkg-card fade-in">
         <div class="pkg-name">Standard Detail</div>
