@@ -732,13 +732,13 @@
     <!-- Slideshow -->
     <!-- Crossfade slideshow -->
     <style>
-      .fade-slide { position:absolute;inset:0;opacity:0;transition:opacity 0.9s ease;aspect-ratio:4/3; }
+      .fade-slide { position:absolute;inset:0;opacity:0;transition:opacity 0.9s ease;aspect-ratio:3/2; }
       .fade-slide.active { opacity:1;position:relative; }
       #workSlider { position:relative;overflow:hidden;background:#111; }
     </style>
     <div id="workSlider">
       <div class="fade-slide active" id="fs0">
-        <img src="./corvette.jpg" alt="Corvette C8 — Exterior Detail" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;">
+        <img src="./corvette.jpg" alt="Corvette C8 — Exterior Detail" style="width:100%;height:100%;object-fit:cover;object-position:center 55%;display:block;">
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">Corvette C8 — Exterior Detail</div>
       </div>
       <div class="fade-slide" id="fs1">
@@ -746,7 +746,7 @@
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">BMW M5 — Interior Detail</div>
       </div>
       <div class="fade-slide" id="fs2">
-        <img src="./bmw-m5.jpg" alt="BMW M5 — Exterior Detail" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;">
+        <img src="./bmw-m5.jpg" alt="BMW M5 — Exterior Detail" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;">
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">BMW M5 — Exterior Detail</div>
       </div>
       <div class="fade-slide" id="fs3">
@@ -754,7 +754,7 @@
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">Jaguar F-Type — Interior Detail</div>
       </div>
       <div class="fade-slide" id="fs4">
-        <img src="./audi-r8.jpg" alt="Audi R8 — Interior Detail" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;">
+        <img src="./audi-r8.jpg" alt="Audi R8 — Interior Detail" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;">
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">Audi R8 — Interior Detail</div>
       </div>
       <div class="fade-slide" id="fs5">
@@ -762,14 +762,10 @@
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">Corvette C6 — Interior Detail</div>
       </div>
       <div class="fade-slide" id="fs6">
-        <img src="./mercedes-engine.jpg" alt="Mercedes — Engine Bay Detail" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;">
+        <img src="./mercedes-engine.jpg" alt="Mercedes — Engine Bay Detail" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;">
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">Mercedes — Engine Bay Detail</div>
       </div>
       <div class="fade-slide" id="fs7">
-        <img src="./audi-r8-ext.jpg" alt="Audi R8 — Exterior" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;">
-        <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">Audi R8 — Exterior</div>
-      </div>
-      <div class="fade-slide" id="fs8">
         <img src="./audi-r8-grille.jpg" alt="Audi R8 — Detail Close-Up" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;">
         <div style="position:absolute;bottom:16px;left:20px;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:0.04em;">Audi R8 — Detail Close-Up</div>
       </div>
@@ -786,14 +782,14 @@
         <div class="fsdot" onclick="goSlide(5)" style="width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.3);cursor:pointer;transition:background 0.3s;"></div>
         <div class="fsdot" onclick="goSlide(6)" style="width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.3);cursor:pointer;transition:background 0.3s;"></div>
         <div class="fsdot" onclick="goSlide(7)" style="width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.3);cursor:pointer;transition:background 0.3s;"></div>
-        <div class="fsdot" onclick="goSlide(8)" style="width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.3);cursor:pointer;transition:background 0.3s;"></div>
+        <div class="fsdot" onclick="goSlide(7)" style="width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.3);cursor:pointer;transition:background 0.3s;"></div>
       </div>
     </div>
     <p style="text-align:center;color:#444;font-size:12px;margin-top:14px;">Send us your photos to be featured here</p>
   </section>
   <script>
     (function(){
-      const total = 9;
+      const total = 8;
       let cur = 0;
       function update(n) {
         document.getElementById('fs' + cur).classList.remove('active');
