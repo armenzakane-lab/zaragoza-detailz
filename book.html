@@ -732,6 +732,17 @@
             </div>
           </div>
 
+          <!-- Travel Fee -->
+          <div class="form-group">
+            <label for="travelFee">Travel Fee <span style="font-size:11px;color:#555;font-weight:400;">(based on distance from Corona)</span></label>
+            <select id="travelFee" name="travel_fee" onchange="updateSummary()" style="background:#1a1a1a;border:1px solid #2a2a2a;color:#fff;padding:13px 14px;border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;width:100%;appearance:none;cursor:pointer;">
+              <option value="0">Within 20 miles of Corona — Free</option>
+              <option value="10">10–19 miles outside — +$10</option>
+              <option value="20">20–29 miles outside — +$20</option>
+              <option value="50">30–50 miles outside — +$50</option>
+            </select>
+          </div>
+
           <hr class="form-divider" />
 
           <!-- Maintenance Plan Dropdown -->
@@ -835,13 +846,14 @@
       const servicePrice = servicePrices[service] || 0;
       const plan = document.querySelector('[name="maintenance_frequency"]:checked')?.value || '';
       const planPrice = planPrices[plan] || 0;
+      const travelFee = parseInt(document.getElementById('travelFee')?.value || '0');
       // Add-ons
       let addonTotal = 0;
       document.querySelectorAll('[name^="addon_"]:checked').forEach(cb => {
         const match = cb.value.match(/\+\$(\d+)/);
         if (match) addonTotal += parseInt(match[1]);
       });
-      const total = servicePrice + planPrice + addonTotal;
+      const total = servicePrice + planPrice + addonTotal + travelFee;
 
       // Update display
       const svEl = document.getElementById('sumServiceVal');
@@ -855,7 +867,14 @@
         if (planLbl) planLbl.textContent = plan + ' Plan';
       } else if (planRow) { planRow.style.display = 'none'; }
       const totalEl = document.getElementById('sumTotal');
-      if (totalEl) totalEl.textContent = servicePrice > 0 ? '$' + total + (plan ? ' + plan' : '') : '—';
+      if (totalEl) {
+        if (servicePrice > 0) {
+          let t = '$' + total;
+          if (plan) t += ' + plan';
+          if (travelFee > 0) t += ' (incl. $' + travelFee + ' travel)';
+          totalEl.textContent = t;
+        } else { totalEl.textContent = '—'; }
+      }
     }
 
     function highlightPlan(radio) {
