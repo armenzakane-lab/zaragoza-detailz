@@ -601,23 +601,35 @@
       .btn-nav.desktop-only { display: none; }
       .hamburger { display: flex; }
 
-      section { padding: 72px 20px; }
-      #maintenance { padding: 72px 20px; }
+      section { padding: 60px 20px; }
+      #maintenance { padding: 60px 20px; }
       #maintenance .inner { padding: 0; }
 
-      .packages-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-      .plans-grid { grid-template-columns: 1fr; }
+      .packages-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .plans-grid { grid-template-columns: 1fr; gap: 12px; }
       .form-row { grid-template-columns: 1fr; }
       .addons-grid { grid-template-columns: 1fr; }
 
-      .booking-card { padding: 32px 24px; }
+      .pkg-card { padding: 18px 14px; }
+      .pkg-name { font-size: 1rem; }
+      .pkg-price { font-size: 1.1rem; }
+      .pkg-list { font-size: 12px; }
 
-      footer { padding: 40px 20px; }
-      .footer-links { flex-direction: column; gap: 10px; }
+      .plan-card { padding: 20px 16px; }
+
+      .booking-card { padding: 28px 18px; }
+
+      footer { padding: 32px 20px; }
+      .footer-links { flex-direction: column; gap: 10px; align-items: center; }
+
+      .hero-headline { font-size: clamp(2rem, 10vw, 3.2rem); letter-spacing: -1px; }
+      .hero-sub { font-size: 15px; padding: 0 8px; }
+      .hero-cta { padding: 14px 28px; font-size: 15px; }
     }
 
-    @media (max-width: 480px) {
-      .hero-headline { font-size: 2.4rem; }
+    @media (max-width: 400px) {
+      .packages-grid { grid-template-columns: 1fr; }
+      .hero-headline { font-size: 2rem; }
     }
   </style>
 </head>
