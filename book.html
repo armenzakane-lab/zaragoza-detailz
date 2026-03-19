@@ -725,6 +725,7 @@
             <div class="form-group">
               <label for="date">Preferred Date</label>
               <input type="date" id="date" name="preferred_date" min="2026-03-20" style="text-align:left;" />
+              <div id="dateErrMsg" style="display:none;color:#f43f5e;font-size:12px;margin-top:6px;">Please select a future date — same-day bookings are not available.</div>
             </div>
             <div class="form-group">
               <label for="address">Your Address *</label>
@@ -807,13 +808,31 @@
   </div>
 
   <script>
-    // ─── Set date min to tomorrow ────────────────────
+    // ─── Set date min to tomorrow (iOS safe) ─────────
     (function() {
-      const d = new Date();
-      d.setDate(d.getDate() + 1);
-      const tomorrow = d.toISOString().split('T')[0];
       const dateEl = document.getElementById('date');
-      if (dateEl) { dateEl.min = tomorrow; dateEl.style.textAlign = 'left'; }
+      if (!dateEl) return;
+      const getTomorrow = () => {
+        const d = new Date();
+        d.setDate(d.getDate() + 1);
+        return d.toISOString().split('T')[0];
+      };
+      dateEl.min = getTomorrow();
+      dateEl.style.textAlign = 'left';
+      // iOS ignores min attr — validate on change
+      dateEl.addEventListener('change', function() {
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        const selected = new Date(this.value + 'T00:00:00');
+        if (selected <= today) {
+          this.value = getTomorrow();
+          this.style.borderColor = '#f43f5e';
+          const msg = document.getElementById('dateErrMsg');
+          if (msg) { msg.style.display = 'block'; setTimeout(() => { msg.style.display = 'none'; this.style.borderColor = ''; }, 3000); }
+        } else {
+          this.style.borderColor = '';
+        }
+      });
     })();
 
     // ─── Check ?booked=1 ────────────────────────────
