@@ -728,10 +728,42 @@
 
           <hr class="form-divider" />
 
-          <label class="sub-label">
-            <input type="checkbox" name="maintenance_interest" value="Yes, interested in maintenance plan" />
-            I'm interested in a maintenance subscription plan
-          </label>
+          <!-- Maintenance Plan Dropdown -->
+          <div class="form-group">
+            <label for="fMaintenance">Maintenance Plan</label>
+            <select id="fMaintenance" name="maintenance_plan" onchange="toggleMaintenancePlan(this.value)" style="background:#1a1a1a;border:1px solid #2a2a2a;color:#fff;padding:12px 14px;border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;width:100%;appearance:none;cursor:pointer">
+              <option value="">No thanks — one-time service</option>
+              <option value="interested">Yes, I'm interested in a plan</option>
+            </select>
+          </div>
+
+          <!-- Plan options — shown when they select yes -->
+          <div id="maintenancePlanOptions" style="display:none;background:#111;border:1px solid #2a2a2a;border-radius:10px;padding:16px;margin-top:-8px">
+            <p style="font-size:12px;color:#888;margin-bottom:12px;font-weight:600;text-transform:uppercase;letter-spacing:.6px">Choose Your Plan</p>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #2a2a2a;border-radius:8px;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='#2563eb'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='#2a2a2a'">
+                <input type="radio" name="maintenance_frequency" value="Weekly" onchange="highlightPlan(this)" style="accent-color:#2563eb">
+                <div>
+                  <div style="font-weight:700;color:#fff;font-size:14px">Weekly</div>
+                  <div style="font-size:12px;color:#666">Best for daily drivers &amp; show cars</div>
+                </div>
+              </label>
+              <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #2a2a2a;border-radius:8px;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='#2563eb'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='#2a2a2a'">
+                <input type="radio" name="maintenance_frequency" value="Bi-Weekly" onchange="highlightPlan(this)" style="accent-color:#2563eb">
+                <div>
+                  <div style="font-weight:700;color:#fff;font-size:14px">Bi-Weekly <span style="background:rgba(37,99,235,.15);color:#60a5fa;font-size:10px;padding:2px 8px;border-radius:20px;margin-left:6px;font-weight:600">Most Popular</span></div>
+                  <div style="font-size:12px;color:#666">Keeps your car consistently fresh</div>
+                </div>
+              </label>
+              <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #2a2a2a;border-radius:8px;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='#2563eb'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='#2a2a2a'">
+                <input type="radio" name="maintenance_frequency" value="Monthly" onchange="highlightPlan(this)" style="accent-color:#2563eb">
+                <div>
+                  <div style="font-weight:700;color:#fff;font-size:14px">Monthly</div>
+                  <div style="font-size:12px;color:#666">Great for low-mileage vehicles</div>
+                </div>
+              </label>
+            </div>
+          </div>
 
           <div class="form-grid single">
             <div class="form-group">
@@ -756,7 +788,31 @@
         document.getElementById('bookingFlow').style.display = 'none';
         document.getElementById('successState').classList.add('show');
       }
+      // Pre-select maintenance plan if coming from Subscribe button
+      const plan = params.get('plan');
+      if (plan) {
+        const sel = document.getElementById('fMaintenance');
+        if (sel) { sel.value = 'interested'; toggleMaintenancePlan('interested'); }
+        const planMap = { weekly: 'Weekly', biweekly: 'Bi-Weekly', monthly: 'Monthly' };
+        const freq = planMap[plan];
+        if (freq) {
+          const radio = document.querySelector('[name="maintenance_frequency"][value="' + freq + '"]');
+          if (radio) { radio.checked = true; highlightPlan(radio); }
+        }
+      }
     })();
+
+    // ─── Maintenance plan toggle ─────────────────────
+    function toggleMaintenancePlan(val) {
+      const opts = document.getElementById('maintenancePlanOptions');
+      if (opts) opts.style.display = val === 'interested' ? 'block' : 'none';
+    }
+    function highlightPlan(radio) {
+      document.querySelectorAll('[name="maintenance_frequency"]').forEach(r => {
+        r.closest('label').style.borderColor = '#2a2a2a';
+      });
+      radio.closest('label').style.borderColor = '#2563eb';
+    }
 
     // ─── Package selection ──────────────────────────
     function selectPackage(service) {
