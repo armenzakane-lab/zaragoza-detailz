@@ -240,7 +240,7 @@
     /* ─── PACKAGE CARDS ────────────────────────────── */
     .pkg-cards {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 16px;
     }
 
@@ -585,6 +585,32 @@
           <div class="step-sub">Tap a package to get started.</div>
 
           <div class="pkg-cards">
+            <div class="pkg-card" data-service="Exterior Detail" id="pkgExterior" onclick="selectPackage('Exterior Detail')">
+              <div class="pkg-name">Exterior Detail</div>
+              <div class="pkg-price">$45</div>
+              <ul class="pkg-list">
+                <li>Foam hand wash</li>
+                <li>Wheels &amp; tires cleaned</li>
+                <li>Tire shine</li>
+                <li>Exterior windows</li>
+                <li>Spray wax protection</li>
+              </ul>
+              <div style="font-size:11px;color:#666;margin-top:10px">Every 2–4 weeks</div>
+            </div>
+
+            <div class="pkg-card" data-service="Interior Detail" id="pkgInterior" onclick="selectPackage('Interior Detail')">
+              <div class="pkg-name">Interior Detail</div>
+              <div class="pkg-price">$85</div>
+              <ul class="pkg-list">
+                <li>Full vacuum (seats, carpets, trunk)</li>
+                <li>Wipe down all surfaces</li>
+                <li>Cupholders &amp; door panels</li>
+                <li>Interior windows</li>
+                <li>Light stain removal</li>
+                <li>Air freshener</li>
+              </ul>
+            </div>
+
             <div class="pkg-card" data-service="Standard Detail" id="pkgStandard" onclick="selectPackage('Standard Detail')">
               <div class="pkg-name">Standard Detail</div>
               <div class="pkg-price">$120 Sedan &nbsp;·&nbsp; $140 SUV / Truck</div>
@@ -739,8 +765,9 @@
 
       // Highlight selected card
       document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
-      const id = service === 'Standard Detail' ? 'pkgStandard' : 'pkgPremium';
-      document.getElementById(id).classList.add('selected');
+      const idMap = { 'Standard Detail': 'pkgStandard', 'Premium Detail': 'pkgPremium', 'Exterior Detail': 'pkgExterior', 'Interior Detail': 'pkgInterior' };
+      const id = idMap[service];
+      if (id) document.getElementById(id).classList.add('selected');
 
       // Update step indicators
       document.getElementById('stepDot1').classList.remove('active');
