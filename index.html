@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zaragoza Detailz — Premium Mobile Detailing � IE � OC � LA</title>
+  <title>Zaragoza Detailz — Premium Mobile Detailing � IE � OC � LA</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
@@ -628,6 +628,7 @@
   <!-- ─── NAV ─────────────────────────────────────── -->
   <nav>
     <a href="#hero" class="nav-logo">
+      <img src="./logo.jpg" alt="Zaragoza Detailz" style="height:36px;width:36px;object-fit:cover;border-radius:6px;margin-right:10px;vertical-align:middle;">
       Zaragoza Detailz
     </a>
     <div class="nav-right">
@@ -647,10 +648,13 @@
   </div>
 
   <!-- ─── HERO ─────────────────────────────────────── -->
-  <section id="hero" style="max-width:100%;padding:0;">
-    <div class="hero-glow"></div>
-    <div class="hero-content fade-in">
-      <span class="hero-tag">Mobile Detailing · Los Angeles</span>
+  <section id="hero" style="max-width:100%;padding:0;position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;">
+    <!-- Real photo background -->
+    <div style="position:absolute;inset:0;z-index:0;background:url('./corvette.jpg') center center/cover no-repeat;"></div>
+    <!-- Dark overlay -->
+    <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.8) 100%);"></div>
+    <div class="hero-content fade-in" style="position:relative;z-index:2;">
+      <span class="hero-tag">Mobile Detailing · IE · OC · LA</span>
       <h1 class="hero-headline">Detail That<br>Hits Different.</h1>
       <p class="hero-sub">Premium mobile detailing — we come to you anywhere in the Inland Empire, Orange County, and Los Angeles.</p>
       <a href="./book.html" class="btn-hero">Book Your Detail</a>
@@ -719,6 +723,21 @@
     </div>
   </section>
 
+  <!-- ─── OUR WORK ───────────────────────────────── -->
+  <section style="padding:80px 40px;max-width:1100px;margin:0 auto;">
+    <div class="section-label fade-in">Real Results</div>
+    <h2 class="section-title fade-in">Our Work</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" class="fade-in">
+      <div style="border-radius:14px;overflow:hidden;aspect-ratio:4/3;">
+        <img src="./corvette.jpg" alt="Exterior detail - Corvette C8" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+      </div>
+      <div style="border-radius:14px;overflow:hidden;aspect-ratio:4/3;">
+        <img src="./bmw-interior.jpg" alt="Interior detail - BMW M5" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+      </div>
+    </div>
+    <p style="text-align:center;color:#666;font-size:13px;margin-top:16px;">Corvette C8 exterior · BMW M5 interior — real work, real results.</p>
+  </section>
+
   <!-- ─── MAINTENANCE PLANS ─────────────────────── -->
   <div id="maintenance">
     <div class="inner">
@@ -764,7 +783,7 @@
       <a href="mailto:ZaragozaDetailz@gmail.com">ZaragozaDetailz@gmail.com</a>
       <a href="https://instagram.com/ZaragozaDetailz" target="_blank" rel="noopener">@ZaragozaDetailz</a>
     </div>
-    <div class="footer-copy">© 2026 Zaragoza Detailz · IE � OC � LA · All rights reserved.</div>
+    <div class="footer-copy">© 2026 Zaragoza Detailz · IE � OC � LA · All rights reserved.</div>
   </footer>
 
   <script>
