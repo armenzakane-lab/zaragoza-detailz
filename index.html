@@ -227,7 +227,7 @@
     /* ─── PACKAGES ─────────────────────────────────── */
     .packages-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 24px;
     }
 
@@ -601,35 +601,23 @@
       .btn-nav.desktop-only { display: none; }
       .hamburger { display: flex; }
 
-      section { padding: 60px 20px; }
-      #maintenance { padding: 60px 20px; }
+      section { padding: 72px 20px; }
+      #maintenance { padding: 72px 20px; }
       #maintenance .inner { padding: 0; }
 
-      .packages-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-      .plans-grid { grid-template-columns: 1fr; gap: 12px; }
+      .packages-grid { grid-template-columns: 1fr; }
+      .plans-grid { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
       .addons-grid { grid-template-columns: 1fr; }
 
-      .pkg-card { padding: 18px 14px; }
-      .pkg-name { font-size: 1rem; }
-      .pkg-price { font-size: 1.1rem; }
-      .pkg-list { font-size: 12px; }
+      .booking-card { padding: 32px 24px; }
 
-      .plan-card { padding: 20px 16px; }
-
-      .booking-card { padding: 28px 18px; }
-
-      footer { padding: 32px 20px; }
-      .footer-links { flex-direction: column; gap: 10px; align-items: center; }
-
-      .hero-headline { font-size: clamp(2rem, 10vw, 3.2rem); letter-spacing: -1px; }
-      .hero-sub { font-size: 15px; padding: 0 8px; }
-      .hero-cta { padding: 14px 28px; font-size: 15px; }
+      footer { padding: 40px 20px; }
+      .footer-links { flex-direction: column; gap: 10px; }
     }
 
-    @media (max-width: 400px) {
-      .packages-grid { grid-template-columns: 1fr; }
-      .hero-headline { font-size: 2rem; }
+    @media (max-width: 480px) {
+      .hero-headline { font-size: 2.4rem; }
     }
   </style>
 </head>
@@ -674,32 +662,6 @@
     <div class="packages-grid">
 
       <div class="pkg-card fade-in">
-        <div class="pkg-name">Exterior Detail</div>
-        <div class="pkg-price">$45</div>
-        <ul class="pkg-list">
-          <li>Foam hand wash</li>
-          <li>Wheels &amp; tires cleaned</li>
-          <li>Tire shine</li>
-          <li>Exterior windows</li>
-          <li>Spray wax protection</li>
-        </ul>
-        <div style="font-size:11px;color:#666;margin-top:10px">Recommended every 2–4 weeks</div>
-      </div>
-
-      <div class="pkg-card fade-in">
-        <div class="pkg-name">Interior Detail</div>
-        <div class="pkg-price">$85</div>
-        <ul class="pkg-list">
-          <li>Full vacuum (seats, carpets, trunk)</li>
-          <li>Wipe down all surfaces</li>
-          <li>Cupholders &amp; door panels</li>
-          <li>Interior windows</li>
-          <li>Light stain removal</li>
-          <li>Air freshener</li>
-        </ul>
-      </div>
-
-      <div class="pkg-card fade-in">
         <div class="pkg-name">Standard Detail</div>
         <div class="pkg-price">$120 Sedan &nbsp;·&nbsp; $140 SUV / Truck</div>
         <ul class="pkg-list">
@@ -739,19 +701,19 @@
         <div class="plan-card fade-in">
           <div class="plan-name">Weekly</div>
           <div class="plan-desc">Keep it fresh every week. Perfect for daily drivers who want their car always looking its best.</div>
-          <a href="./book.html?plan=weekly" class="btn-plan">Subscribe</a>
+          <a href="mailto:ZaragozaDetailz@gmail.com?subject=Weekly%20Maintenance%20Plan" class="btn-plan">Subscribe</a>
         </div>
 
         <div class="plan-card fade-in">
           <div class="plan-name">Bi-Weekly</div>
           <div class="plan-desc">The sweet spot. Every two weeks keeps your vehicle clean without the daily commitment.</div>
-          <a href="./book.html?plan=biweekly" class="btn-plan">Subscribe</a>
+          <a href="mailto:ZaragozaDetailz@gmail.com?subject=Bi-Weekly%20Maintenance%20Plan" class="btn-plan">Subscribe</a>
         </div>
 
         <div class="plan-card fade-in">
           <div class="plan-name">Monthly</div>
           <div class="plan-desc">A full monthly refresh. Great for weekend rides or vehicles that don't see daily use.</div>
-          <a href="./book.html?plan=monthly" class="btn-plan">Subscribe</a>
+          <a href="mailto:ZaragozaDetailz@gmail.com?subject=Monthly%20Maintenance%20Plan" class="btn-plan">Subscribe</a>
         </div>
 
       </div>

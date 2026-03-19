@@ -88,23 +88,8 @@
 
     @media (max-width: 520px) {
       nav { padding: 0 16px; }
-      .nav-phone { font-size: 0.75rem; }
-      .nav-logo { font-size: 0.9rem; }
-      .page { padding: 32px 16px 64px; }
-      .step-heading { font-size: 1.3rem; }
-      .pkg-cards { grid-template-columns: 1fr 1fr !important; gap: 10px; }
-      .pkg-card { padding: 14px 12px; }
-      .pkg-name { font-size: 0.9rem; }
-      .pkg-price { font-size: 1rem; }
-      .pkg-list { font-size: 11px; }
-      .form-row { grid-template-columns: 1fr !important; }
-      .btn-book { padding: 14px; font-size: 15px; }
-      .step-indicators { gap: 4px; }
-      .step-label { font-size: 10px; }
-    }
-
-    @media (max-width: 360px) {
-      .pkg-cards { grid-template-columns: 1fr !important; }
+      .nav-phone { font-size: 0.78rem; }
+      .nav-logo { font-size: 0.95rem; }
     }
 
     /* ─── PAGE WRAPPER ─────────────────────────────── */
@@ -255,12 +240,12 @@
     /* ─── PACKAGE CARDS ────────────────────────────── */
     .pkg-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
 
     @media (max-width: 560px) {
-      .pkg-cards { grid-template-columns: 1fr 1fr; }
+      .pkg-cards { grid-template-columns: 1fr; }
     }
 
     .pkg-card {
@@ -600,32 +585,6 @@
           <div class="step-sub">Tap a package to get started.</div>
 
           <div class="pkg-cards">
-            <div class="pkg-card" data-service="Exterior Detail" id="pkgExterior" onclick="selectPackage('Exterior Detail')">
-              <div class="pkg-name">Exterior Detail</div>
-              <div class="pkg-price">$45</div>
-              <ul class="pkg-list">
-                <li>Foam hand wash</li>
-                <li>Wheels &amp; tires cleaned</li>
-                <li>Tire shine</li>
-                <li>Exterior windows</li>
-                <li>Spray wax protection</li>
-              </ul>
-              <div style="font-size:11px;color:#888;margin-top:10px">Recommended every 2–4 weeks</div>
-            </div>
-
-            <div class="pkg-card" data-service="Interior Detail" id="pkgInterior" onclick="selectPackage('Interior Detail')">
-              <div class="pkg-name">Interior Detail</div>
-              <div class="pkg-price">$85</div>
-              <ul class="pkg-list">
-                <li>Full vacuum (seats, carpets, trunk)</li>
-                <li>Wipe down all surfaces</li>
-                <li>Cupholders &amp; door panels</li>
-                <li>Interior windows</li>
-                <li>Light stain removal</li>
-                <li>Air freshener</li>
-              </ul>
-            </div>
-
             <div class="pkg-card" data-service="Standard Detail" id="pkgStandard" onclick="selectPackage('Standard Detail')">
               <div class="pkg-name">Standard Detail</div>
               <div class="pkg-price">$120 Sedan &nbsp;·&nbsp; $140 SUV / Truck</div>
@@ -764,21 +723,12 @@
   </div>
 
   <script>
-    // ─── Check URL params ────────────────────────────
+    // ─── Check ?booked=1 ────────────────────────────
     (function () {
       const params = new URLSearchParams(window.location.search);
       if (params.get('booked') === '1') {
         document.getElementById('bookingFlow').style.display = 'none';
         document.getElementById('successState').classList.add('show');
-      }
-      // Pre-check maintenance subscription if coming from a plan link
-      const plan = params.get('plan');
-      if (plan) {
-        const subCheck = document.getElementById('fSubscription');
-        if (subCheck) subCheck.checked = true;
-        const planMap = { weekly: 'Weekly', biweekly: 'Bi-Weekly', monthly: 'Monthly' };
-        const notes = document.getElementById('fNotes');
-        if (notes && planMap[plan]) notes.value = 'Interested in ' + planMap[plan] + ' maintenance plan.';
       }
     })();
 
@@ -789,9 +739,8 @@
 
       // Highlight selected card
       document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
-      const idMap = { 'Standard Detail': 'pkgStandard', 'Premium Detail': 'pkgPremium', 'Exterior Detail': 'pkgExterior', 'Interior Detail': 'pkgInterior' };
-      const id = idMap[service];
-      if (id) document.getElementById(id).classList.add('selected');
+      const id = service === 'Standard Detail' ? 'pkgStandard' : 'pkgPremium';
+      document.getElementById(id).classList.add('selected');
 
       // Update step indicators
       document.getElementById('stepDot1').classList.remove('active');
