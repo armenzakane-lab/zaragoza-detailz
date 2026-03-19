@@ -748,21 +748,21 @@
               <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #2a2a2a;border-radius:8px;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='#2563eb'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='#2a2a2a'">
                 <input type="radio" name="maintenance_frequency" value="Weekly" onchange="highlightPlan(this)" style="accent-color:#2563eb">
                 <div>
-                  <div style="font-weight:700;color:#fff;font-size:14px">Weekly</div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-weight:700;color:#fff;font-size:14px">Weekly</span><span style="font-weight:800;color:#2563eb;font-size:14px;">+$35/wk</span></div>
                   <div style="font-size:12px;color:#666">Best for daily drivers &amp; show cars</div>
                 </div>
               </label>
               <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #2a2a2a;border-radius:8px;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='#2563eb'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='#2a2a2a'">
                 <input type="radio" name="maintenance_frequency" value="Bi-Weekly" onchange="highlightPlan(this)" style="accent-color:#2563eb">
                 <div>
-                  <div style="font-weight:700;color:#fff;font-size:14px">Bi-Weekly <span style="background:rgba(37,99,235,.15);color:#60a5fa;font-size:10px;padding:2px 8px;border-radius:20px;margin-left:6px;font-weight:600">Most Popular</span></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-weight:700;color:#fff;font-size:14px">Bi-Weekly <span style="background:rgba(37,99,235,.15);color:#60a5fa;font-size:10px;padding:2px 8px;border-radius:20px;margin-left:4px;font-weight:600">Popular</span></span><span style="font-weight:800;color:#2563eb;font-size:14px;">+$45/2wk</span></div>
                   <div style="font-size:12px;color:#666">Keeps your car consistently fresh</div>
                 </div>
               </label>
               <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #2a2a2a;border-radius:8px;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='#2563eb'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='#2a2a2a'">
                 <input type="radio" name="maintenance_frequency" value="Monthly" onchange="highlightPlan(this)" style="accent-color:#2563eb">
                 <div>
-                  <div style="font-weight:700;color:#fff;font-size:14px">Monthly</div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-weight:700;color:#fff;font-size:14px">Monthly</span><span style="font-weight:800;color:#2563eb;font-size:14px;">+$65/mo</span></div>
                   <div style="font-size:12px;color:#666">Great for low-mileage vehicles</div>
                 </div>
               </label>
@@ -774,6 +774,15 @@
               <label for="notes">Notes</label>
               <textarea id="notes" name="message" placeholder="Anything else we should know? Special requests, access details, etc."></textarea>
             </div>
+          </div>
+
+          <!-- Order Summary -->
+          <div style="background:#111;border:1px solid #1f1f1f;border-radius:12px;padding:16px 18px;margin-bottom:16px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#444;margin-bottom:12px;">Order Summary</div>
+            <div id="sumService" style="display:flex;justify-content:space-between;font-size:14px;padding:6px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#888;">Service</span><span style="color:#fff;font-weight:600;" id="sumServiceVal">Not selected</span></div>
+            <div id="sumPlanRow" style="display:none;justify-content:space-between;font-size:14px;padding:6px 0;border-bottom:1px solid #1a1a1a;"><span style="color:#888;" id="sumPlanLabel">Maintenance Plan</span><span style="color:#2563eb;font-weight:600;" id="sumPlanVal">—</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:15px;font-weight:800;padding-top:12px;"><span style="color:#fff;">Estimated Total</span><span style="color:#2563eb;" id="sumTotal">—</span></div>
+            <div style="font-size:11px;color:#333;margin-top:6px;">*Sedan base price. SUV/Truck may vary slightly.</div>
           </div>
 
           <button type="submit" class="btn-submit">Book Now →</button>
@@ -811,11 +820,48 @@
       const opts = document.getElementById('maintenancePlanOptions');
       if (opts) opts.style.display = val === 'interested' ? 'block' : 'none';
     }
+    // ─── Pricing map ────────────────────────────────
+    const servicePrices = {
+      'Exterior Detail': 45, 'Interior Detail': 85,
+      'Standard Detail': 120, 'Premium Detail': 220
+    };
+    const planPrices = { 'Weekly': 35, 'Bi-Weekly': 45, 'Monthly': 65 };
+    const planLabels = { 'Weekly': '+$35/wk', 'Bi-Weekly': '+$45/2wk', 'Monthly': '+$65/mo' };
+
+    function updateSummary() {
+      const service = document.getElementById('selectedServiceInput')?.value || '';
+      const servicePrice = servicePrices[service] || 0;
+      const plan = document.querySelector('[name="maintenance_frequency"]:checked')?.value || '';
+      const planPrice = planPrices[plan] || 0;
+      // Add-ons
+      let addonTotal = 0;
+      document.querySelectorAll('[name^="addon_"]:checked').forEach(cb => {
+        const match = cb.value.match(/\+\$(\d+)/);
+        if (match) addonTotal += parseInt(match[1]);
+      });
+      const total = servicePrice + planPrice + addonTotal;
+
+      // Update display
+      const svEl = document.getElementById('sumServiceVal');
+      if (svEl) svEl.textContent = service ? (service + ' — $' + servicePrice) : 'Not selected';
+      const planRow = document.getElementById('sumPlanRow');
+      const planVal = document.getElementById('sumPlanVal');
+      const planLbl = document.getElementById('sumPlanLabel');
+      if (plan && planRow && planVal) {
+        planRow.style.display = 'flex';
+        planVal.textContent = planLabels[plan] || '';
+        if (planLbl) planLbl.textContent = plan + ' Plan';
+      } else if (planRow) { planRow.style.display = 'none'; }
+      const totalEl = document.getElementById('sumTotal');
+      if (totalEl) totalEl.textContent = servicePrice > 0 ? '$' + total + (plan ? ' + plan' : '') : '—';
+    }
+
     function highlightPlan(radio) {
       document.querySelectorAll('[name="maintenance_frequency"]').forEach(r => {
         r.closest('label').style.borderColor = '#2a2a2a';
       });
       radio.closest('label').style.borderColor = '#2563eb';
+      updateSummary();
     }
 
     // ─── Package selection ──────────────────────────
@@ -828,6 +874,7 @@
       const idMap = { 'Standard Detail': 'pkgStandard', 'Premium Detail': 'pkgPremium', 'Exterior Detail': 'pkgExterior', 'Interior Detail': 'pkgInterior' };
       const id = idMap[service];
       if (id) document.getElementById(id).classList.add('selected');
+      updateSummary();
 
       // Update step indicators
       document.getElementById('stepDot1').classList.remove('active');
@@ -845,6 +892,7 @@
       if (card) {
         card.classList.toggle('checked', checkbox.checked);
       }
+      updateSummary();
     }
 
     // ─── Continue to step 3 ─────────────────────────
