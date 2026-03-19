@@ -1221,7 +1221,11 @@
         <div class="booking-form-wrap fade-in fade-in-delay-2">
           <div class="form-title">📋 Request a Booking</div>
 
-          <form id="bookingForm">
+          <form id="bookingForm" action="https://formsubmit.co/ZaragozaDetailz@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="New Booking Request - Zaragoza Detailz">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="https://armenzakane-lab.github.io/zaragoza-detailz/?booked=1">
+            <input type="hidden" name="_template" value="table">
             <div class="form-row">
               <div class="form-group">
                 <label for="fname">Full Name *</label>
@@ -1278,7 +1282,7 @@
 
             <button type="submit" class="btn btn-gold form-submit">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
-              Send Booking Request
+              Book Now
             </button>
           </form>
 
@@ -1386,15 +1390,20 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     fadeEls.forEach(el => observer.observe(el));
 
-    // ─── Booking form ───
+    // ─── Booking form — real submission via Formsubmit ───
     const bookingForm = document.getElementById('bookingForm');
     const formSuccess = document.getElementById('formSuccess');
-    bookingForm.addEventListener('submit', (e) => {
-      e.preventDefault();
+    // Show success if redirected back after form submission
+    if (new URLSearchParams(window.location.search).get('booked') === '1') {
       bookingForm.style.display = 'none';
       formSuccess.style.display = 'block';
-      // Scroll into view
-      formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
+    }
+    bookingForm.addEventListener('submit', (e) => {
+      // Let the form submit naturally to Formsubmit
+      const btn = bookingForm.querySelector('button[type="submit"]');
+      if (btn) { btn.textContent = 'Sending...'; btn.disabled = true; }
+      // e.preventDefault() removed — real POST happens
     });
 
     // ─── Date input min = today ───
