@@ -607,12 +607,7 @@
         </div>
       </div>
 
-      <form id="bookingForm" action="https://formsubmit.co/ZaragozaDetailz@gmail.com" method="POST">
-        <input type="hidden" name="_subject" value="New Booking - Zaragoza Detailz" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_next" value="https://zaragozadetailz.com/book.html?booked=1" />
-        <input type="hidden" name="_template" value="table" />
-        <input type="hidden" name="_next" value="https://zaragozadetailz.com/book.html?booked=1" />
+      <form id="bookingForm">
         <input type="hidden" name="service" id="selectedServiceInput" />
 
         <!-- ─── STEP 1: Service ─────────────────────── -->
@@ -940,42 +935,73 @@
         renderTimeSlots();
       }
 
+      function formatSlotLabel(val) {
+        var parts = val.split(':');
+        var h = parseInt(parts[0]);
+        var min = parseInt(parts[1]);
+        var ampm = h < 12 ? 'AM' : 'PM';
+        var h12 = h % 12 || 12;
+        return h12 + (min > 0 ? ':' + String(min).padStart(2,'0') : '') + ' ' + ampm;
+      }
+
       function renderTimeSlots() {
         var wrap = document.getElementById('timeSlotWrap');
         var grid = document.getElementById('timeSlotGrid');
         var hidden = document.getElementById('bookingTime');
         if (!wrap || !grid) return;
-        // Generate slots: 6:00am to 7:00pm, every 2h30m
-        var slots = [];
-        var startMin = 6 * 60; // 6:00am
-        var endMin = 19 * 60;  // 7:00pm
-        var interval = 150;    // 2h30m in minutes
-        for (var m = startMin; m <= endMin; m += interval) {
-          var h = Math.floor(m / 60);
-          var min = m % 60;
-          var ampm = h < 12 ? 'AM' : 'PM';
-          var h12 = h % 12 || 12;
-          var label = h12 + (min > 0 ? ':' + String(min).padStart(2,'0') : '') + ' ' + ampm;
-          slots.push({ label: label, value: String(h).padStart(2,'0') + ':' + String(min).padStart(2,'0') });
-        }
-        grid.innerHTML = '';
-        hidden.value = '';
-        slots.forEach(function(slot) {
-          var btn = document.createElement('button');
-          btn.type = 'button';
-          btn.textContent = slot.label;
-          btn.style.cssText = 'background:#1a1a1a;border:1px solid #2a2a2a;color:#fff;padding:10px 6px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;';
-          btn.addEventListener('click', function() {
-            document.querySelectorAll('#timeSlotGrid button').forEach(function(b) {
-              b.style.background='#1a1a1a'; b.style.borderColor='#2a2a2a'; b.style.color='#fff';
-            });
-            this.style.background='#2563eb'; this.style.borderColor='#2563eb'; this.style.color='#fff';
-            hidden.value = slot.value;
-            document.getElementById('timeErrMsg').style.display = 'none';
-          });
-          grid.appendChild(btn);
-        });
+
+        // Show loading state
         wrap.style.display = 'block';
+        grid.innerHTML = '<div style="color:#888;font-size:13px;grid-column:1/-1;padding:8px 0;">Checking availability...</div>';
+        hidden.value = '';
+
+        var dateVal = document.getElementById('date').value;
+        if (!dateVal) return;
+
+        var API_BASE = 'https://web-production-87713.up.railway.app';
+        fetch(API_BASE + '/api/bookings/slots?date=' + dateVal)
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            var available = data.available || [];
+            var taken = new Set(data.taken || []);
+            // All slots in order
+            var allSlots = ['06:00','08:30','11:00','13:30','16:00','18:30'];
+            grid.innerHTML = '';
+            hidden.value = '';
+
+            if (allSlots.length === 0) {
+              grid.innerHTML = '<div style="color:#888;font-size:13px;grid-column:1/-1;padding:8px 0;">No slots available for this date.</div>';
+              return;
+            }
+
+            allSlots.forEach(function(val) {
+              var isAvailable = available.includes(val);
+              var btn = document.createElement('button');
+              btn.type = 'button';
+              btn.textContent = formatSlotLabel(val);
+              if (isAvailable) {
+                btn.style.cssText = 'background:#1a1a1a;border:1px solid #2a2a2a;color:#fff;padding:10px 6px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;';
+                btn.setAttribute('data-slot', val);
+                btn.addEventListener('click', function() {
+                  document.querySelectorAll('#timeSlotGrid button[data-slot]').forEach(function(b) {
+                    b.style.background='#1a1a1a'; b.style.borderColor='#2a2a2a'; b.style.color='#fff';
+                  });
+                  this.style.background='#2563eb'; this.style.borderColor='#2563eb'; this.style.color='#fff';
+                  hidden.value = val;
+                  document.getElementById('timeErrMsg').style.display = 'none';
+                });
+              } else {
+                // Booked — greyed out, not clickable
+                btn.disabled = true;
+                btn.style.cssText = 'background:#111;border:1px solid #1f1f1f;color:#444;padding:10px 6px;border-radius:8px;font-size:13px;font-weight:600;cursor:not-allowed;font-family:inherit;text-decoration:line-through;';
+                btn.title = 'Already booked';
+              }
+              grid.appendChild(btn);
+            });
+          })
+          .catch(function() {
+            grid.innerHTML = '<div style="color:#f43f5e;font-size:13px;grid-column:1/-1;padding:8px 0;">Could not load availability. Try again.</div>';
+          });
       }
 
       function prevMonth() {
@@ -1002,29 +1028,84 @@
         initCal();
       }
 
-      // Form validation: require date selected
+      // Form submission — sends to booking API
       document.addEventListener('DOMContentLoaded', function() {
         var form = document.getElementById('bookingForm');
-        if (form) {
-          form.addEventListener('submit', function(e) {
-            var dateVal = document.getElementById('date').value;
-            if (!dateVal) {
-              e.preventDefault();
-              var disp = document.getElementById('calSelectedDisplay');
-              disp.textContent = 'Please select a preferred date.';
-              disp.style.color = '#f43f5e';
-              document.getElementById('customCal').scrollIntoView({ behavior: 'smooth', block: 'center' });
-              setTimeout(function() { disp.style.color = '#fff'; disp.textContent = ''; }, 4000);
-              return;
+        if (!form) return;
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          var dateVal = document.getElementById('date').value;
+          if (!dateVal) {
+            var disp = document.getElementById('calSelectedDisplay');
+            disp.textContent = 'Please select a preferred date.';
+            disp.style.color = '#f43f5e';
+            document.getElementById('customCal').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(function() { disp.style.color = '#fff'; disp.textContent = ''; }, 4000);
+            return;
+          }
+          var timeVal = document.getElementById('bookingTime').value;
+          if (!timeVal) {
+            var errMsg = document.getElementById('timeErrMsg');
+            if (errMsg) { errMsg.style.display = 'block'; errMsg.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+            return;
+          }
+
+          // Collect add-ons
+          var addons = [];
+          document.querySelectorAll('[name^="addon_"]:checked').forEach(function(cb) { addons.push(cb.value); });
+
+          var payload = {
+            date:       dateVal,
+            time:       timeVal,
+            name:       document.getElementById('name').value,
+            email:      document.getElementById('email').value,
+            phone:      document.getElementById('phone').value,
+            vehicle:    document.getElementById('vehicle').value,
+            address:    document.getElementById('address').value,
+            service:    document.getElementById('selectedServiceInput').value,
+            addons:     addons.join(', '),
+            travel_fee: parseInt(document.getElementById('travelFee').value || '0'),
+            maint_plan: (document.querySelector('[name="maintenance_frequency"]:checked') || {}).value || '',
+            notes:      document.getElementById('notes').value
+          };
+
+          var submitBtn = form.querySelector('.btn-submit');
+          submitBtn.textContent = 'Booking...';
+          submitBtn.disabled = true;
+
+          var API_BASE = 'https://web-production-87713.up.railway.app';
+          fetch(API_BASE + '/api/bookings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          })
+          .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, status: r.status, data: d }; }); })
+          .then(function(res) {
+            if (res.ok) {
+              // Show success
+              document.getElementById('bookingFlow').style.display = 'none';
+              document.getElementById('successState').classList.add('show');
+            } else if (res.status === 409) {
+              // Slot just got taken
+              submitBtn.textContent = 'Book Now →';
+              submitBtn.disabled = false;
+              alert('That time slot was just booked by someone else. Please choose a different time.');
+              // Refresh slots
+              document.getElementById('bookingTime').value = '';
+              renderTimeSlots();
+            } else {
+              submitBtn.textContent = 'Book Now →';
+              submitBtn.disabled = false;
+              alert('Something went wrong. Please try again or call us directly.');
             }
-            var timeVal = document.getElementById('bookingTime').value;
-            if (!timeVal) {
-              e.preventDefault();
-              var errMsg = document.getElementById('timeErrMsg');
-              if (errMsg) { errMsg.style.display = 'block'; errMsg.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-            }
+          })
+          .catch(function() {
+            submitBtn.textContent = 'Book Now →';
+            submitBtn.disabled = false;
+            alert('Network error. Please try again.');
           });
-        }
+        });
       });
     })();
 
