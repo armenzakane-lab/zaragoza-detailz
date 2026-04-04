@@ -632,6 +632,7 @@
 
     /* ─── DESKTOP (1024px+) ────────────────────────── */
     @media (min-width: 1024px) {
+      #hero-bg { background-position: center 70% !important; }
       /* Nav */
       nav { padding: 0 64px; }
       .nav-logo { font-size: 1.1rem; }
@@ -703,7 +704,7 @@
   <!-- ─── HERO ─────────────────────────────────────── -->
   <section id="hero" style="max-width:100%;padding:0;position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;">
     <!-- Real photo background -->
-    <div style="position:absolute;inset:0;z-index:0;background:url('./porsche-gt3rs.jpg') center center/cover no-repeat;"></div>
+    <div id="hero-bg" style="position:absolute;inset:0;z-index:0;background:url('./porsche-gt3rs.jpg') center center/cover no-repeat;"></div>
     <!-- Dark overlay -->
     <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.8) 100%);"></div>
     <div class="hero-content fade-in" style="position:relative;z-index:2;">
